@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Facade;
 
+
+
 return [
 
     /*
@@ -141,6 +143,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -177,6 +180,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        
 
     ],
 
@@ -192,7 +197,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'Image' => Intervention\Image\Facades\Image::class
         // ...
+        
     ])->toArray(),
 
 ];
