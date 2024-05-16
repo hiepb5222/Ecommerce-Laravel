@@ -16,7 +16,7 @@
                         @enderror
                     </div>
                     <div class="col-5">
-                        <img src="{{$user->images ->count() >0? asset('upload/users/'.$user->images->first()->url) : 'upload/users/default.jpg'}}" id="show-image" alt="" style="max-width: 100%; max-height: 200px;">
+                        <img src="{{$user->images ->count() >0? asset('upload/'.$user->images->first()->url) : 'upload/default.jpg'}}" id="show-image" alt="" style="max-width: 100%; max-height: 200px;">
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@
     </div>
 @endsection
 
-@yield('script')
+@section('script')
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
@@ -130,3 +130,4 @@
 
         });
     </script>
+@endsection
