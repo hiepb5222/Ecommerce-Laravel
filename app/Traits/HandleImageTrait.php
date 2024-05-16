@@ -5,7 +5,7 @@ use Image;
 
 
 trait HandleImageTrait{
-    protected $path='upload/users/';
+    protected $path='upload/';
     public function veryfy($request)
     {
         return $request->has('image');

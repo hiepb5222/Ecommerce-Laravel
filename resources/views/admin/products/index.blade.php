@@ -1,14 +1,14 @@
 @extends('admin.layouts.app')
-@section('title', 'Users')
+@section('title', 'Products')
 @section('content')
     <div class="card">
 
         @if (@session('message'))
             <h1 class="text-primary">{{ session('message') }}</h1>
         @endif
-        <h1>User List</h1>
+        <h1>Product List</h1>
         <div>
-            <a href="{{ route('users.create') }}" class="btn btn-primary">Create User</a>
+            <a href="{{ route('products.create') }}" class="btn btn-primary">Create Product</a>
         </div>
 
         <div>
@@ -17,21 +17,22 @@
                     <th>#</th>
                     <th>Image</th>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
+                    <th>Price</th>
+                    <th>Sale</th>
                     <th>Action</th>
                 </tr>
-                @foreach ($users as $item)
+                @foreach ($products as $item)
                     <tr>
                         <td>{{ $item->id }}</td>
                         <th><img src="{{ $item->images->count() > 0 ? asset('upload/' . $item->images->first()->url) : 'upload/default.jpg' }}"
                                 width="200px" height="200px" alt=""></th>
                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->email }}</td>
-                        <td>{{ $item->phone }}</td>
+                        <td>{{ $item->price }}</td>
+                        <td>{{ $item->sale }}</td>
                         <td>
-                            <a href="{{ route('users.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('users.destroy', $item->id) }}" id="form-delete{{ $item->id }}"
+                            <a href="{{ route('products.show', $item->id) }}" class="btn btn-info">Show</a>
+                            <a href="{{ route('products.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                            <form action="{{ route('products.destroy', $item->id) }}" id="form-delete{{ $item->id }}"
                                 method="post">
                                 @csrf
                                 @method('delete')
@@ -42,7 +43,7 @@
                     </tr>
                 @endforeach
             </table>
-            {{ $users->links() }}
+            {{ $products->links() }}
         </div>
     </div>
 
