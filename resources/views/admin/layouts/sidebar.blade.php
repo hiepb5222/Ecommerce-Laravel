@@ -49,7 +49,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white "
+                <a class="nav-link text-white 
                     {{ request()->routeIs('categories.*') ? 'bg-gradient-primary active' : '' }}
                     href="{{ route('categories.index') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
