@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
@@ -19,14 +20,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//route client
 Route::get('/', [HomeController::class, 'index'])->name('client.home');
 
 Route::get('product/{category_id}', [ClientProductController::class, 'index'])->name('client.products.index');
 Route::get('product-detail/{category_id}', [ClientProductController::class, 'show'])->name('client.products.show');
-Route::get('/dashboard', function () {
-    return view('admin.dashboard.index');
-})->name('dashboard');
+
 
 
 
@@ -34,7 +33,17 @@ Route::get('/dashboard', function () {
 
 Auth::routes();
 
-Route::resource('roles', RoleController::class);
-Route::resource('users', UserController::class);
-Route::resource('categories', CategoryController::class);
-Route::resource('products', ProductController::class);
+
+//route admin
+Route::middleware('auth')->group(function()
+{
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard.index');
+    })->name('dashboard');
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('coupons', CouponController::class);
+});
+

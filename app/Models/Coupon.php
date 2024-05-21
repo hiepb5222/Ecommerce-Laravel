@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Coupon extends Model
 {
@@ -15,4 +16,9 @@ class Coupon extends Model
         'value',
         'expiry_date',
     ];
+
+    public function getExpiryDateAttribute()
+    {
+        return Carbon::parse($this->attributes['expiry_date'])->format('Y-m-d');
+    }
 }
