@@ -15,8 +15,9 @@
     @endif
 
     <!-- Shop Detail Start -->
+    
     <div class="container-fluid py-5">
-        <form action="" method="POST" class="row px-xl-5">
+        <form action="{{ route('client.carts.add') }}" method="POST" class="row px-xl-5">
             @csrf
             <input type="hidden" name="product_id" value="{{ $product->id }}">
             <div class="col-lg-5 pb-5">
@@ -43,7 +44,8 @@
                 <div class="d-flex mb-3">
 
                 </div>
-                <h3 class="font-weight-semi-bold mb-4">${{ $product->price }}</h3>
+                <input type="hidden" name="product_price" value="{{ $product->price }}">
+                <h3 class="font-weight-semi-bold mb-4">$ {{ $product->price }} </h3>
 
 
                 <div class="d-flex mb-4">
@@ -70,18 +72,18 @@
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus">
+                            <button class="btn btn-primary btn-minus" type="button">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-secondary text-center" value="1">
+                        <input type="text" class="form-control bg-secondary text-center" value="{{ $product->quantity ?? 1 }}" name="product_quantity">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
+                            <button class="btn btn-primary btn-plus" type="button">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                    <button class="btn btn-primary px-3" type="submit"><i class="fa fa-shopping-cart mr-1" ></i> Add To Cart</button>
                 </div>
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>

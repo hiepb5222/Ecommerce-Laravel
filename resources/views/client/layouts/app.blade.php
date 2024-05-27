@@ -83,9 +83,9 @@
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
-                <a href="" class="btn border">
+                <a href="{{ route('client.carts.index') }}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge" id="productCountCart">{{ $countProductInCart }}</span>
                 </a>
             </div>
         </div>
@@ -115,12 +115,14 @@
                                     <div
                                         class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
                                         @foreach ($item->childrens as $childCategory)
-                                            <a href="{{ route('client.products.index',['category_id' => $childCategory->id])}}" class="dropdown-item">{{ $childCategory->name }}</a>
+                                            <a href="{{ route('client.products.index', ['category_id' => $childCategory->id]) }}"
+                                                class="dropdown-item">{{ $childCategory->name }}</a>
                                         @endforeach
                                     </div>
                                 </div>
                             @else
-                                <a href="{{ route('client.products.index',['category_id' => $item->id])}}" class="dropdown-item">{{ $item->name }}</a>
+                                <a href="{{ route('client.products.index', ['category_id' => $item->id]) }}"
+                                    class="dropdown-item">{{ $item->name }}</a>
                             @endif
                         @endforeach
 
@@ -139,9 +141,9 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="{{route('client.home')}}" class="nav-item nav-link active">Home</a>
+                            <a href="{{ route('client.home') }}" class="nav-item nav-link active">Home</a>
                             <a href="shop.html" class="nav-item nav-link">Shop</a>
-                       
+
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
@@ -220,9 +222,16 @@
     <script src="{{ asset('client/lib/easing/easing.min.js') }}"></script>
     <script src="{{ asset('client/lib/owlcarousel/owl.carousel.min.js') }}"></script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+        integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
     <!-- Contact Javascript File -->
     <script src="{{ asset('client/mail/jqBootstrapValidation.min.js') }}"></script>
     <script src="{{ asset('client/mail/contact.js') }}"></script>
+    <script src="{{ asset('admin/assets/base/base.js') }}"></script>
 
     <!-- Template Javascript -->
     <script src="{{ asset('client/js/main.js') }}"></script>
