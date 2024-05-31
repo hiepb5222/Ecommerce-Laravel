@@ -145,9 +145,12 @@
 
             $(document).on("click", ".btn-remove-product", function(e) {
                 let url = $(this).data("action");
+                let data = {
+                        _token: '{{ csrf_token() }}'
+                    };
                 confirmDelete()
                     .then(function() {
-                        $.post(url, (res) => {
+                        $.post(url, data, (res) => { // Gửi CSRF token trong dữ liệu yêu cầu
                             let cart = res.cart;
                             let cartProductId = res.product_cart_id;
                             $("#productCountCart").text(cart.product_count);
@@ -161,30 +164,6 @@
                     .catch(function() {});
             });
 
-            $(document).on('click', '.btn-remove-product', function(e) {
-                let url = $(this).data('action')
-                let data = {
-                        _token: '{{ csrf_token() }}'
-                    };
-                
-                confirmDelete()
-                    .then(function() {
-                        $.post(url, data  // Gửi CSRF token trong dữ liệu yêu cầu
-                        ,(res) => {
-                            let cart = res.cart;
-                            let cartProductId = res.product_cart_id;
-                            $("#productCountCart").text(cart.product_count);
-                            $(".total-price")
-                                .text(`$${cart.total_price}`)
-                                .data("price", cart.product_count);
-                            $(`#row-${cartProductId}`).remove();
-
-                        });
-                    })
-                    .catch(function() {});
-
-
-            })
 
             const TIME_TO_UPDATE = 1000;
 
