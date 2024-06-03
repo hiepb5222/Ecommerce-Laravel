@@ -18,7 +18,7 @@ class UserCanCheckoutCartMiddleware
     public function handle(Request $request, Closure $next)
     {
         $cart = app(Cart::class)->firstOrCreateBy(auth()->user()->id);
-        if($cart->product->count() > 0) {
+        if($cart->products->count()> 0) {
             return $next($request);
         }else{
             abort(404, 'Không có sản phẩm nào trong cửa hàng'); 
