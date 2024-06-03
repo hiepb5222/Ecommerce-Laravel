@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Orders\CreateOrderRequest;
 use App\Http\Resources\Cart\CartResource;
 use Illuminate\Http\Request;
 use App\Models\Cart;
@@ -10,7 +11,9 @@ use App\Models\CartProduct;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
+
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session as Session;
 
 class CartController extends Controller
 {
@@ -38,7 +41,7 @@ class CartController extends Controller
     public function index()
     {
         $cart = $this->cart->firstOrCreateBy(auth()->user()->id)->load('products');
-        
+
         return view('client.carts.index', compact('cart'));
     }
 
@@ -60,8 +63,8 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        
-        
+
+
         if ($request->product_size) {
             $product = $this->product->findOrFail($request->product_id);
             $cart = $this->cart->firstOrCreateBy(auth()->user()->id);
@@ -130,9 +133,9 @@ class CartController extends Controller
 
     public function updateQuantityProduct(Request $request, $id)
     {
-         $cartProduct =  $this->cartProduct->find($id);
-         $dataUpdate = $request->all();
-         if($dataUpdate['product_quantity'] < 1 ) {
+        $cartProduct =  $this->cartProduct->find($id);
+        $dataUpdate = $request->all();
+        if ($dataUpdate['product_quantity'] < 1) {
             $cartProduct->delete();
         } else {
             $cartProduct->update($dataUpdate);
@@ -149,14 +152,59 @@ class CartController extends Controller
     }
     public function removeProductInCart($id)
     {
-         $cartProduct =  $this->cartProduct->find($id);
-         $cartProduct->delete();
-         $cart =  $cartProduct->cart;
-         return response()->json([
-             'product_cart_id' => $id,
-             'cart' => new CartResource($cart)
-         ], Response::HTTP_OK);
+        $cartProduct =  $this->cartProduct->find($id);
+        $cartProduct->delete();
+        $cart =  $cartProduct->cart;
+        return response()->json([
+            'product_cart_id' => $id,
+            'cart' => new CartResource($cart)
+        ], Response::HTTP_OK);
     }
 
+    public function applyCoupon(Request $request)
+    {
+        $name = $request->input('coupon_name');
+        $coupon = $this->coupon->firstWithExpiryDate($name, auth()->user()->id);
+        
+
+        if ($coupon) {
+            $message = "Successfully applied coupon";
+            Session::put('coupon_id', $coupon->id);
+            Session::put('discount_amount_price', $coupon->value);
+            Session::put('coupon_code', $coupon->name);
+        } else {
+            Session::forget(['coupon_id', 'discount_amount_price','coupon_code']);
+            $message = "Failed to apply coupon";
+        }   
+        return redirect()->route('client.carts.index')->with(['message' => $message, 'coupon' => $coupon]);
+    }
+
+    public function checkout()
+    {
+        $cart = $this->cart->firstOrCreateBy(auth()->user()->id)->load('products');
+        return view('client.carts.checkout', compact('cart'));
+    }
+
+    public function processCheckout(CreateOrderRequest $request)
+    {
+
+        $dataCreate = $request->all();
+        $dataCreate['user_id'] = auth()->user()->id;
+        $dataCreate['status'] = 'pending';
+        $this->order->create($dataCreate);
+        $couponID = Session::get('coupon_id');
+        if($couponID)
+        {
+            $coupon =  $this->coupon->find(Session::get('coupon_id'));
+            if($coupon)
+            {
+                $coupon->users()->attach(auth()->user()->id, ['value' => $coupon->value]);
+            }
+        }
+        $cart = $this->cart->firstOrCreateBy(auth()->user()->id);
+        $cart->products()->delete();
+        Session::forget(['coupon_id', 'discount_amount_price', 'coupon_code']);
+
+    }
 
 }
