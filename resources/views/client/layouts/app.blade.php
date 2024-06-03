@@ -142,20 +142,25 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{{ route('client.home') }}" class="nav-item nav-link active">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
+                            <a href="{{ route('client.orders.index') }}" class="nav-link ">Order</a>
 
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
-                                </div>
-                            </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="" class="nav-item nav-link">Login</a>
-                            <a href="" class="nav-item nav-link">Register</a>
+                            @if (auth()->check())
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                class="d-none">
+                                @csrf
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
+                            <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
+                        @endif
+
                         </div>
                     </div>
                 </nav>
@@ -204,6 +209,7 @@
     <!-- Featured Start -->
     @yield('content')
 
+
     <!-- Vendor End -->
 
 
@@ -235,6 +241,7 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('client/js/main.js') }}"></script>
+    @yield('script')
 </body>
 
 </html>

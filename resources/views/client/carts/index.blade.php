@@ -3,13 +3,12 @@
 @section('content')
     <!-- Cart Start -->
     <div class="container-fluid pt-5">
+        @if (session('message') && session('message'))
+            <div class="row">
+                <h3 class="text-danger">{{ session('message') }}</h3>
+            </div>
+        @endif
         <div class="row px-xl-5">
-            @if (session('message'))
-                <div class="row">
-                    <h3 class="text-danger">{{ session('message') }}</h3>
-                </div>
-            @endif
-
             <div class="col-lg-8 table-responsive mb-5">
                 <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">
@@ -87,11 +86,13 @@
                 </table>
             </div>
             <div class="col-lg-4">
-                <form class="mb-5" action="">
+                <form class="mb-5" action=" {{ route('client.carts.apply_coupon') }}" method="POST">
+                    @csrf
+
                     <div class="input-group">
-                        <input type="text" class="form-control p-4" placeholder="Coupon Code">
+                        <input type="text" class="form-control p-4" name="coupon_name" placeholder="Coupon Code">
                         <div class="input-group-append">
-                            <button class="btn btn-primary">Apply Coupon</button>
+                            <button class="btn btn-primary" type="submit">Apply Coupon</button>
                         </div>
                     </div>
                 </form>
@@ -106,108 +107,126 @@
                                 ${{ $cart->total_price }}</h6>
                         </div>
 
-                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                        @if (session('discount_amount_price'))
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Coupon </h6>
+                                <h6 class="font-weight-medium coupon-div"
+                                    data-price="{{ session('discount_amount_price') }}">
+                                    ${{ session('discount_amount_price') }}</h6>
+                            </div>
+                        @endif
                     </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Total</h5>
+                            <h5 class="font-weight-bold total-price-all"></h5>
+                        </div>
+                        <a href="{{ route('client.checkout.index') }}" class="btn btn-block btn-primary my-3 py-3">Proceed
+                            To Checkout</a>
+                    </div>
+
+
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Cart End -->
+        <!-- Cart End -->
 
 
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+        <!-- Contact Javascript File -->
+        <script src="mail/jqBootstrapValidation.min.js"></script>
+        <script src="mail/contact.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-    <script>
-        $(function() {
-            getTotalValue();
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+        <script>
+            $(function() {
+                getTotalValue();
 
-            function getTotalValue() {
-                let total = $(".total-price").data("price");
-                let couponPrice = $(".coupon-div")?.data("price") ?? 0;
-                $(".total-price-all").text(`$${total - couponPrice}`);
-            }
+                function getTotalValue() {
+                    let total = $(".total-price").data("price");
+                    let couponPrice = $(".coupon-div")?.data("price") ?? 0;
+                    $(".total-price-all").text(`$${total - couponPrice}`);
+                }
 
-            $(document).on("click", ".btn-remove-product", function(e) {
-                let url = $(this).data("action");
-                let data = {
-                        _token: '{{ csrf_token() }}'
-                    };
-                confirmDelete()
-                    .then(function() {
-                        $.post(url, data, (res) => { // Gửi CSRF token trong dữ liệu yêu cầu
-                            let cart = res.cart;
-                            let cartProductId = res.product_cart_id;
-                            $("#productCountCart").text(cart.product_count);
-                            $(".total-price")
-                                .text(`$${cart.total_price}`)
-                                .data("price", cart.product_count);
-                            $(`#row-${cartProductId}`).remove();
-                            getTotalValue();
-                        });
-                    })
-                    .catch(function() {});
-            });
-
-
-            const TIME_TO_UPDATE = 1000;
-
-            $(document).on(
-                "click",
-                ".btn-update-quantity",
-                _.debounce(function(e) {
-
+                $(document).on("click", ".btn-remove-product", function(e) {
                     let url = $(this).data("action");
-                    let id = $(this).data("id");
                     let data = {
-                        product_quantity: $(`#productQuantityInput-${id}`).val(),
                         _token: '{{ csrf_token() }}'
                     };
-                    $.post(url, data, (res) => {
-                        console.log(res);
-                        let cartProductId = res.product_cart_id;
-                        let cart = res.cart;
+                    confirmDelete()
+                        .then(function() {
+                            $.post(url, data, (res) => { // Gửi CSRF token trong dữ liệu yêu cầu
+                                let cart = res.cart;
+                                let cartProductId = res.product_cart_id;
+                                $("#productCountCart").text(cart.product_count).data("price", cart.total_price);;
+                                $(".total-price")
+                                    .text(`$${cart.total_price}`)
+                                    .data("price", cart.product_count);
+                                $(`#row-${cartProductId}`).remove();
+                                getTotalValue();
+                            });
+                        })
+                        .catch(function() {});
+                });
 
-                        $("#productCountCart").text(cart.product_count);
-                        if (res.remove_product) {
-                            $(`#row-${cartProductId}`).remove();
-                        } else {
-                            $(`#cartProductPrice${cartProductId}`).html(
-                                `$${res.cart_product_price}`
-                            );
-                        }
-                        getTotalValue();
-                        // cartProductPrice;
 
-                        $(".total-price").text(`$${cart.total_price}`);
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "success",
-                            showConfirmButton: false,
-                            timer: 1500,
+                const TIME_TO_UPDATE = 1000;
+
+                $(document).on(
+                    "click",
+                    ".btn-update-quantity",
+                    _.debounce(function(e) {
+
+                        let url = $(this).data("action");
+                        let id = $(this).data("id");
+                        let data = {
+                            product_quantity: $(`#productQuantityInput-${id}`).val(),
+                            _token: '{{ csrf_token() }}'
+                        };
+                        $.post(url, data, (res) => {
+                            console.log(res);
+                            let cartProductId = res.product_cart_id;
+                            let cart = res.cart;
+
+                            $("#productCountCart").text(cart.product_count);
+                            if (res.remove_product) {
+                                $(`#row-${cartProductId}`).remove();
+                            } else {
+                                $(`#cartProductPrice${cartProductId}`).html(
+                                    `$${res.cart_product_price}`
+                                );
+                            }
+                            // getTotalValue();
+                            // cartProductPrice;
+
+                            $(".total-price").text(`$${cart.total_price}`).data("price", cart
+                                .total_price); // Sửa lại giá trị data-price
+                            getTotalValue();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "success",
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
                         });
-                    });
-                }, TIME_TO_UPDATE)
-            );
-        });
-    </script>
-    </body>
+                    }, TIME_TO_UPDATE)
+                );
+            });
+        </script>
+        </body>
 
-    </html>
-@endsection
+        </html>
+    @endsection
