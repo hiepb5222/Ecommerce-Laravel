@@ -29,14 +29,20 @@
                         <td>{{ $item->value }}</td>
                         <td>{{ $item->expiry_date }}</td>
                         <td>
-                            <a href="{{ route('coupons.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('coupons.destroy', $item->id) }} " id="form-delete{{ $item->id }}"
-                                method="post">
-                                @csrf
-                                @method('delete')
+                            @can('update-coupon')
+                                <a href="{{ route('coupons.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                            @endcan
+                            
+                            @can('delete-coupon')
+                                <form action="{{ route('coupons.destroy', $item->id) }} " id="form-delete{{ $item->id }}"
+                                    method="post">
+                                    @csrf
+                                    @method('delete')
 
-                            </form>
-                            <button class='btn btn-delete btn btn-danger' data-id={{ $item->id }}>Delete</button>
+                                </form>
+                                <button class='btn btn-delete btn btn-danger' data-id={{ $item->id }}>Delete</button>
+                            @endcan
+
                         </td>
                     </tr>
                 @endforeach
