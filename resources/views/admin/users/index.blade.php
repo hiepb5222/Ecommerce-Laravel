@@ -24,20 +24,26 @@
                 @foreach ($users as $item)
                     <tr>
                         <td>{{ $item->id }}</td>
-                        <th><img src="{{ $item->images->count() > 0 ? asset('upload/' . $item->images->first()->url) : 'upload/default.jpg' }}"
+                        <th><img src="{{ $item->image_path}}"
                                 width="200px" height="200px" alt=""></th>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->email }}</td>
                         <td>{{ $item->phone }}</td>
                         <td>
-                            <a href="{{ route('users.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('users.destroy', $item->id) }}" id="form-delete{{ $item->id }}"
-                                method="post">
-                                @csrf
-                                @method('delete')
+                            @can('update-user')
+                                <a href="{{ route('users.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                            @endcan
 
-                            </form>
-                            <button class='btn btn-delete btn btn-danger' data-id={{ $item->id }}>Delete</button>
+                            @can('delete-user')
+                                <form action="{{ route('users.destroy', $item->id) }}" id="form-delete{{ $item->id }}"
+                                    method="post">
+                                    @csrf
+                                    @method('delete')
+
+                                </form>
+                                <button class='btn btn-delete btn btn-danger' data-id={{ $item->id }}>Delete</button>
+                            @endcan
+
                         </td>
                     </tr>
                 @endforeach
@@ -47,4 +53,3 @@
     </div>
 
 @endsection
-

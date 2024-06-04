@@ -25,14 +25,21 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->parent_name }}</td>
                         <td>
-                            <a href="{{ route('categories.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('categories.destroy', $item->id) }} " id="form-delete{{ $item->id }}"
-                                method="post">
-                                @csrf
-                                @method('delete')
+                            @can('update-category')
+                                <a href="{{ route('categories.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                            @endcan
 
-                            </form>
-                            <button class='btn btn-delete btn btn-danger' data-id={{ $item->id }}>Delete</button>
+                            @can('delete-category')
+                                <form action="{{ route('categories.destroy', $item->id) }} " id="form-delete{{ $item->id }}"
+                                    method="post">
+                                    @csrf
+                                    @method('delete')
+
+                                </form>
+                                <button class='btn btn-delete btn btn-danger' data-id={{ $item->id }}>Delete</button>
+                            @endcan
+
+
                         </td>
                     </tr>
                 @endforeach

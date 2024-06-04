@@ -25,13 +25,17 @@
                         <td>{{ $role->name }}</td>
                         <td>{{ $role->display_name }}</td>
                         <td>
-                            <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('roles.destroy', $role->id) }}" id="form-delete{{ $role->id }}" method="post">
-                                @csrf
-                                @method('delete')
+                            @can('super-admin')
+                                <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">Edit</a>
+                                <form action="{{ route('roles.destroy', $role->id) }}" id="form-delete{{ $role->id }}"
+                                    method="post">
+                                    @csrf
+                                    @method('delete')
 
-                            </form>
-                            <button class='btn btn-delete btn btn-danger' data-id={{ $role->id }}>Delete</button>
+                                </form>
+                                <button class='btn btn-delete btn btn-danger' data-id={{ $role->id }}>Delete</button>
+                            @endcan
+
                         </td>
                     </tr>
                 @endforeach

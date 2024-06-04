@@ -73,8 +73,7 @@
                                 </td>
                                 <td class="align-middle">
                                     <button class="btn btn-sm btn-primary btn-remove-product"
-                                        data-action="{{ route('client.carts.remove_product', $item->id) }}"
-                                        data-token="{{ csrf_token() }}">
+                                        data-action="{{ route('client.carts.remove_product', $item->id) }}">
                                         <i class="fa fa-times"></i></button>
                                 </td>
 
@@ -129,104 +128,7 @@
                 </div>
             </div>
         </div>
-        <!-- Cart End -->
-
-
-
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-        <!-- Contact Javascript File -->
-        <script src="mail/jqBootstrapValidation.min.js"></script>
-        <script src="mail/contact.js"></script>
-
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
-        <script>
-            $(function() {
-                getTotalValue();
-
-                function getTotalValue() {
-                    let total = $(".total-price").data("price");
-                    let couponPrice = $(".coupon-div")?.data("price") ?? 0;
-                    $(".total-price-all").text(`$${total - couponPrice}`);
-                }
-
-                $(document).on("click", ".btn-remove-product", function(e) {
-                    let url = $(this).data("action");
-                    let data = {
-                        _token: '{{ csrf_token() }}'
-                    };
-                    confirmDelete()
-                        .then(function() {
-                            $.post(url, data, (res) => { // Gửi CSRF token trong dữ liệu yêu cầu
-                                let cart = res.cart;
-                                let cartProductId = res.product_cart_id;
-                                $("#productCountCart").text(cart.product_count).data("price", cart.total_price);;
-                                $(".total-price")
-                                    .text(`$${cart.total_price}`)
-                                    .data("price", cart.product_count);
-                                $(`#row-${cartProductId}`).remove();
-                                getTotalValue();
-                            });
-                        })
-                        .catch(function() {});
-                });
-
-
-                const TIME_TO_UPDATE = 1000;
-
-                $(document).on(
-                    "click",
-                    ".btn-update-quantity",
-                    _.debounce(function(e) {
-
-                        let url = $(this).data("action");
-                        let id = $(this).data("id");
-                        let data = {
-                            product_quantity: $(`#productQuantityInput-${id}`).val(),
-                            _token: '{{ csrf_token() }}'
-                        };
-                        $.post(url, data, (res) => {
-                            console.log(res);
-                            let cartProductId = res.product_cart_id;
-                            let cart = res.cart;
-
-                            $("#productCountCart").text(cart.product_count);
-                            if (res.remove_product) {
-                                $(`#row-${cartProductId}`).remove();
-                            } else {
-                                $(`#cartProductPrice${cartProductId}`).html(
-                                    `$${res.cart_product_price}`
-                                );
-                            }
-                            // getTotalValue();
-                            // cartProductPrice;
-
-                            $(".total-price").text(`$${cart.total_price}`).data("price", cart
-                                .total_price); // Sửa lại giá trị data-price
-                            getTotalValue();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: "success",
-                                showConfirmButton: false,
-                                timer: 1500,
-                            });
-                        });
-                    }, TIME_TO_UPDATE)
-                );
-            });
-        </script>
-        </body>
-
-        </html>
+    @endsection
+    @section('script')
+        <script src="{{ asset('client/cart/cart.js') }}"></script>
     @endsection
