@@ -95,7 +95,7 @@ class ProductController extends Controller
     {
         $product = $this->product->with(['details', 'categories'])->findOrFail($id);
         $categories = $this->category->get(['id', 'name']);
-        return view('admin.products.edit', compact('product','categories'));
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**

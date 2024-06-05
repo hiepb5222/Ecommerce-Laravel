@@ -26,7 +26,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest('id')->paginate(5);
-        return view('admin.users.index',compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -35,7 +35,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         $roles =   $this->role->all()->groupBy('group');
         return view('admin.users.create', compact('roles'));
     }
@@ -79,7 +79,7 @@ class UserController extends Controller
     {
         $user= $this->user->findOrFail($id)->load('roles');
         $roles =   $this->role->all()->groupBy('group');
-        return view('admin.users.edit',compact('user','roles'));
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -93,12 +93,11 @@ class UserController extends Controller
     {
         $dataUpdate = $request->except('password');
         $user =$this->user->findOrFail($id)->load('roles');
-        if($request->password)
-        {
+        if ($request->password) {
             $dataUpdate['password'] = Hash::make($request->password);
         }
         $currentImage = $user->images ->count() >0 ? $user->images->first()->url : '';
-        $dataUpdate['image'] = $this->user->updateImage($request,$currentImage);
+        $dataUpdate['image'] = $this->user->updateImage($request, $currentImage);
         $user->update($dataUpdate);
         $user ->images()->delete();
         $user ->images()->create(['url' =>$dataUpdate['image']]);
@@ -121,6 +120,4 @@ class UserController extends Controller
         $user->delete();
         return to_route('users.index')->with(['message'=> 'delete success']);
     }
-
-    
 }

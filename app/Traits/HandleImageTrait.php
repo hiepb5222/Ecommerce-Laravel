@@ -3,8 +3,8 @@ namespace App\Traits;
 
 use Image;
 
-
-trait HandleImageTrait{
+trait HandleImageTrait
+{
     protected $path='upload/';
     public function veryfy($request)
     {
@@ -13,19 +13,17 @@ trait HandleImageTrait{
     public function saveImage($request)
     {
 
-        if($this->veryfy($request))
-        {
+        if ($this->veryfy($request)) {
             $image = $request ->file('image');
             $name = time() . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(300,300) ->save($this->path . $name);
+            Image::make($image)->resize(300, 300) ->save($this->path . $name);
             return $name;
         }
     }
 
     public function updateImage($request, $currentImage)
     {
-        if($this->veryfy($request))
-        {
+        if ($this->veryfy($request)) {
             $this->deleteImage($currentImage);
             return $this->saveImage($request);
         }
@@ -34,8 +32,7 @@ trait HandleImageTrait{
 
     public function deleteImage($imageName)
     {
-        if($imageName && file_exists($this->path.$imageName))
-        {
+        if ($imageName && file_exists($this->path.$imageName)) {
             unlink(($this->path.$imageName));
         }
     }

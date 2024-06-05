@@ -45,7 +45,4 @@ class Cart extends Model
             return $carry + $price;
         }, 0) : 0;
     }
-
-
-    
 }

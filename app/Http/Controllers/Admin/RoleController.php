@@ -17,9 +17,9 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $roles = Role::latest('id')->paginate(3);
-        return view('admin.roles.index',compact('roles'));
+        return view('admin.roles.index', compact('roles'));
     }
 
     /**
@@ -28,9 +28,9 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         $permissions = Permission::all()->groupBy('group');
-        return view('admin.roles.create',compact('permissions'));
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -70,7 +70,7 @@ class RoleController extends Controller
     {
         $role = Role::with('permissions')->findOrFail($id);
         $permissions = Permission::all()->groupBy('group');
-        return view('admin.roles.edit', compact('role','permissions'));
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -87,7 +87,6 @@ class RoleController extends Controller
         $role->update($dataUpdate);
         $role->permissions()->sync($dataUpdate['permission_ids']);
         return to_route('roles.index')->with(['message' =>'update success']);
-
     }
 
     /**

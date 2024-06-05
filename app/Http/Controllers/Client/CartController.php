@@ -175,7 +175,7 @@ class CartController extends Controller
         } else {
             Session::forget(['coupon_id', 'discount_amount_price','coupon_code']);
             $message = "Failed to apply coupon";
-        }   
+        }
         return redirect()->route('client.carts.index')->with(['message' => $message, 'coupon' => $coupon]);
     }
 
@@ -193,18 +193,14 @@ class CartController extends Controller
         $dataCreate['status'] = 'pending';
         $this->order->create($dataCreate);
         $couponID = Session::get('coupon_id');
-        if($couponID)
-        {
+        if ($couponID) {
             $coupon =  $this->coupon->find(Session::get('coupon_id'));
-            if($coupon)
-            {
+            if ($coupon) {
                 $coupon->users()->attach(auth()->user()->id, ['value' => $coupon->value]);
             }
         }
         $cart = $this->cart->firstOrCreateBy(auth()->user()->id);
         $cart->products()->delete();
         Session::forget(['coupon_id', 'discount_amount_price', 'coupon_code']);
-
     }
-
 }
