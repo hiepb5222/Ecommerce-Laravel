@@ -22,14 +22,12 @@ class OrderController extends Controller
         return view('admin.orders.index', compact('orders'));
     }
 
-    public function updateStatus(Request $request ,$id)
+    public function updateStatus(Request $request, $id)
     {
         $order =  $this->order->findOrFail($id);
         $order->update(['status' => $request->status]);
         return  response()->json([
             'message' => 'success'
         ], Response::HTTP_OK);
-
     }
-
 }

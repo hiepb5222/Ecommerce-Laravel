@@ -18,7 +18,7 @@ class ProductController extends Controller
     {
         $this->product = $product;
     }
-    public function index(Request $request,$category_id)
+    public function index(Request $request, $category_id)
     {
         $products = $this->product->getBy($request->all, $category_id);
         // return view('client.products.index', compact('product'));

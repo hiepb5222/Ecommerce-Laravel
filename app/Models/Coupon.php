@@ -22,12 +22,13 @@ class Coupon extends Model
         return Carbon::parse($this->attributes['expiry_date'])->format('Y-m-d');
     }
 
-    public function users(){
+    public function users()
+    {
         return $this->belongsToMany(User::class, 'coupon_user');
     }
     public function firstWithExpiryDate($name, $userId)
     {
-        return $this->whereName($name)->whereDoesntHave('users',fn($q) => $q->where('users.id',$userId))
+        return $this->whereName($name)->whereDoesntHave('users', fn($q) => $q->where('users.id', $userId))
         ->whereDate('expiry_date', '>=', Carbon::now())->first();
     }
 }
