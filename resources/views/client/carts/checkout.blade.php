@@ -1,5 +1,5 @@
 @extends('client.layouts.app')
-@section('title', 'Cart')
+@section('title', 'Checkout')
 @section('content')
     <div class="container-fluid pt-5">
         <form class="row px-xl-5" method="POST" action="{{ route('client.checkout.proccess') }}">

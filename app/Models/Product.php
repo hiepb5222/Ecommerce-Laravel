@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HandleImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -43,11 +44,17 @@ class Product extends Model
 
     public function getImagePathAttribute()
     {
-        return asset($this->images->count() >0 ? 'upload/' .$this->images->first()->url : 'upload/default.png');
+        return asset($this->images->count() >0 ? 'upload/' .$this->images->first()->url : 'upload/default.jpg');
     }
     
     public function getSalePriceAttribute()
     {
         return $this->attributes['sale'] ? $this->attributes['price'] - ($this->attributes['sale'] * 0.01 * $this->attributes['price']) :0;
+    }
+
+    public function getSlugAttribute()
+    {
+        return Str::slug($this->name);
+        
     }
 }

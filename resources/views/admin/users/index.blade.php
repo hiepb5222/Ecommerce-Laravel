@@ -36,7 +36,7 @@
 
                             @can('delete-user')
                                 <form action="{{ route('users.destroy', $item->id) }}" id="form-delete{{ $item->id }}"
-                                    method="post">
+                                    method="post" class="d-inline">
                                     @csrf
                                     @method('delete')
 

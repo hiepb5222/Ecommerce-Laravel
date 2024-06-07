@@ -54,21 +54,21 @@ Auth::routes();
 //route admin
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('products', ProductController::class);
-    Route::resource('coupons', CouponController::class);
+    // Route::resource('roles', RoleController::class);
+    // Route::resource('users', UserController::class);
+    // Route::resource('categories', CategoryController::class);
+    // Route::resource('products', ProductController::class);
+    // Route::resource('coupons', CouponController::class);
 
     // Route::resource('roles', RoleController::class);
     Route::prefix('roles')->controller(RoleController::class)->name('roles.')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('role:super-admin');
         Route::post('/', 'store')->name('store')->middleware('role:super-admin');
         Route::get('/create', 'create')->name('create')->middleware('role:super-admin');
-        Route::get('/{coupon}', 'show')->name('show')->middleware('role:super-admin');
-        Route::put('/{coupon}', 'update')->name('update')->middleware('role:super-admin');
-        Route::delete('/{coupon}', 'destroy')->name('destroy')->middleware('role:super-admin');
-        Route::get('/{coupon}/edit', 'edit')->name('edit')->middleware('role:super-admin');
+        Route::get('/{role}', 'show')->name('show')->middleware('role:super-admin');
+        Route::put('/{role}', 'update')->name('update')->middleware('role:super-admin');
+        Route::delete('/{role}', 'destroy')->name('destroy')->middleware('role:super-admin');
+        Route::get('/{role}/edit', 'edit')->name('edit')->middleware('role:super-admin');
     });
 
 
@@ -77,20 +77,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:show-user');
         Route::post('/', 'store')->name('store');
         Route::get('/create', 'create')->name('create')->middleware('permission:create-user');
-        Route::get('/{coupon}', 'show')->name('show')->middleware('permission:show-user');
-        Route::put('/{coupon}', 'update')->name('update')->middleware('permission:update-user');
-        Route::delete('/{coupon}', 'destroy')->name('destroy')->middleware('permission:delete-user');
-        Route::get('/{coupon}/edit', 'edit')->name('edit')->middleware('permission:update-user');
+        Route::get('/{user}', 'show')->name('show')->middleware('permission:show-user');
+        Route::put('/{user}', 'update')->name('update')->middleware('permission:update-user');
+        Route::delete('/{user}', 'destroy')->name('destroy')->middleware('permission:delete-user');
+        Route::get('/{user}/edit', 'edit')->name('edit')->middleware('permission:update-user');
     });
     // Route::resource('categories', CategoryController::class);
     Route::prefix('categories')->controller(CategoryController::class)->name('categories.')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:show-category');
         Route::post('/', 'store')->name('store')->middleware('permission:create-category');
         Route::get('/create', 'create')->name('create')->middleware('permission:create-category');
-        Route::get('/{coupon}', 'show')->name('show')->middleware('permission:show-category');
-        Route::put('/{coupon}', 'update')->name('update')->middleware('permission:update-category');
-        Route::delete('/{coupon}', 'destroy')->name('destroy')->middleware('permission:delete-category');
-        Route::get('/{coupon}/edit', 'edit')->name('edit')->middleware('permission:update-category');
+        Route::get('/{category}', 'show')->name('show')->middleware('permission:show-category');
+        Route::put('/{category}', 'update')->name('update')->middleware('permission:update-category');
+        Route::delete('/{category}', 'destroy')->name('destroy')->middleware('permission:delete-category');
+        Route::get('/{category}/edit', 'edit')->name('edit')->middleware('permission:update-category');
     });
 
     // Route::resource('products', ProductController::class);
@@ -99,10 +99,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:show-product');
         Route::post('/', 'store')->name('store')->middleware('permission:create-product');
         Route::get('/create', 'create')->name('create')->middleware('permission:create-product');
-        Route::get('/{coupon}', 'show')->name('show')->middleware('permission:show-product');
-        Route::put('/{coupon}', 'update')->name('update')->middleware('permission:update-product');
-        Route::delete('/{coupon}', 'destroy')->name('destroy')->middleware('permission:delete-product');
-        Route::get('/{coupon}/edit', 'edit')->name('edit')->middleware('permission:update-product');
+        Route::get('/{product}', 'show')->name('show')->middleware('permission:show-product');
+        Route::put('/{product}', 'update')->name('update')->middleware('permission:update-product');
+        Route::delete('/{product}', 'destroy')->name('destroy')->middleware('permission:delete-product');
+        Route::get('/{product}/edit', 'edit')->name('edit')->middleware('permission:update-product');
     });
 
 
@@ -117,6 +117,6 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    Route::get('orders', [AdminOrderController::class, 'index'])->name('admin.orders.index')->middleware('list-order');
-    Route::post('update-status/{id}', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.update_status')->middleware('list-order');
+    Route::get('orders', [AdminOrderController::class, 'index'])->name('admin.orders.index')->middleware('permission:list-order');
+    Route::post('update-status/{id}', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.update_status')->middleware('permission:update-order-status');
 });

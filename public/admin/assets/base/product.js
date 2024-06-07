@@ -18,11 +18,12 @@ $(() => {
     }
 
     function getSizeIndex(sizes, id) {
-        let index = _.findIndex(sizes, function(o) {
-            return o.id == id;
-        });
-
-        return index;
+        for (let i = 0; i < sizes.length; i++) {
+            if (sizes[i].id === id) {
+                return i;
+            }
+        }
+        return -1; // Trả về -1 nếu không tìm thấy
     }
 
     function removeSize(sizes, id) {
@@ -51,6 +52,7 @@ $(() => {
         let id = $(this).data("id");
         removeSize(sizes, id);
         appendSizesToForm();
+        console.log()
     });
 
     $(document).on("click", ".btn-add-size", function() {

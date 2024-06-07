@@ -18,7 +18,7 @@
 
                 <div class="input-group input-group-static mb-4">
                     <label>Value</label>
-                    <input type="number" name="name" value="{{ old('value') ?? $coupon->value }}" class="form-control">
+                    <input type="number" name="value" value="{{ old('value') ?? $coupon->value }}" class="form-control">
 
                     @error('value')
                         <span class="text-danger">{{ $message }}</span>

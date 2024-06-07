@@ -1,5 +1,5 @@
 @extends('client.layouts.app')
-@section('title', 'cart')
+@section('title', 'Cart')
 @section('content')
     <!-- Cart Start -->
     <div class="container-fluid pt-5">
