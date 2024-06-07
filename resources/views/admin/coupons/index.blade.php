@@ -35,7 +35,7 @@
                             
                             @can('delete-coupon')
                                 <form action="{{ route('coupons.destroy', $item->id) }} " id="form-delete{{ $item->id }}"
-                                    method="post">
+                                    method="post" class="d-inline">
                                     @csrf
                                     @method('delete')
 

@@ -25,7 +25,7 @@ class CreateProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'description' => 'required',
+            'description' => 'required|integer|between:0,100',
             'sale' => 'required',
             'image' => 'required|image|mimes:png,jpg,jpeg,PNG,jpec',
             'price' => 'required',

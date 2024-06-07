@@ -114,7 +114,7 @@ class ProductController extends Controller
         $currentImage = $product->images ->count() >0 ? $product->images->first()->url : '';
         $dataUpdate['image'] = $this->product->updateImage($request, $currentImage);
         $product ->update($dataUpdate);
-
+        $product ->images()->delete();
         $product->images()->create(['url' => $dataUpdate['image']]);
         $product->assignCategory($dataUpdate['category_ids'] ?? []);
         

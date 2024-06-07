@@ -6,7 +6,7 @@
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard "
             target="_blank">
-            <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
+            <img src="{{ auth()->user()->image_path }}" class="navbar-brand-img h-100" alt="main_logo">
             <span class="ms-1 font-weight-bold text-white">Hello {{auth()->user()->name}}</span>
         </a>
     </div>
@@ -40,7 +40,7 @@
                     <a class="nav-link text-white {{ request()->routeIs('users.*') ? 'bg-gradient-primary active' : '' }}"
                         href="{{ route('users.index') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">receipt_long</i>
+                            <i class="material-icons opacity-10">person</i>
                         </div>
                         <span class="nav-link-text ms-1">User</span>
                     </a>
@@ -65,7 +65,7 @@
                     <a class="nav-link text-white {{ request()->routeIs('categories.*') ? 'bg-gradient-primary active' : '' }}"
                         href="{{ route('categories.index') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
+                            <i class="material-icons opacity-10">category</i>
                         </div>
                         <span class="nav-link-text ms-1">Category</span>
                     </a>
@@ -78,7 +78,7 @@
                     <a class="nav-link text-white {{ request()->routeIs('coupons.*') ? 'bg-gradient-primary active' : '' }}"
                         href="{{ route('coupons.index') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
+                            <i class="material-icons opacity-10">receipt_long</i>
                         </div>
                         <span class="nav-link-text ms-1">Coupon</span>
                     </a>
@@ -90,7 +90,7 @@
                     <a class="nav-link text-white {{ request()->routeIs('admin.orders.*') ? 'bg-gradient-primary active' : '' }}"
                         href="{{ route('admin.orders.index') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
+                            <i class="material-icons opacity-10">shopping_cart</i>
                         </div>
                         <span class="nav-link-text ms-1">Order</span>
                     </a>

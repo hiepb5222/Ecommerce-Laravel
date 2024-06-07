@@ -1,5 +1,5 @@
 @extends('client.layouts.app')
-@section('title', 'product detail')
+@section('title', 'Product Detail')
 @section('content')
     <!-- Page Header Start -->
     <div class="row" style="margin-left: 50px">
@@ -15,7 +15,7 @@
     @endif
 
     <!-- Shop Detail Start -->
-    
+
     <div class="container-fluid py-5">
         <form action="{{ route('client.carts.add') }}" method="POST" class="row px-xl-5">
             @csrf
@@ -45,8 +45,15 @@
 
                 </div>
                 <input type="hidden" name="product_price" value="{{ $product->price }}">
-                <h3 class="font-weight-semi-bold mb-4">$ {{ $product->price }} </h3>
-
+                @if ($product->sale > 0)
+                    <div class="d-flex">
+                        <h3 class="font-weight-semi-bold mb-4">Giá bán:
+                            {{ number_format($product->saleprice) }} VND</h3>
+                        <h3 class="text-muted ml-2"><del>Giá gốc: {{ number_format($product->price) }} VND</del></h3>
+                    </div>
+                @else
+                    <h3 class="font-weight-semi-bold mb-4">Giá bán: {{ number_format($product->price) }}</h3>
+                @endif
 
                 <div class="d-flex mb-4">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Size:</p>
@@ -76,14 +83,16 @@
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-secondary text-center" value="{{ $product->quantity ?? 1 }}" name="product_quantity">
+                        <input type="text" class="form-control bg-secondary text-center"
+                            value="{{ $product->quantity ?? 1 }}" name="product_quantity">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus" type="button">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3" type="submit"><i class="fa fa-shopping-cart mr-1" ></i> Add To Cart</button>
+                    <button class="btn btn-primary px-3" type="submit"><i class="fa fa-shopping-cart mr-1"></i> Add To
+                        Cart</button>
                 </div>
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
@@ -121,7 +130,8 @@
                             <div class="col-md-6">
                                 <h4 class="mb-4">1 review for {{ $product->name }}</h4>
                                 <div class="media mb-4">
-                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
+                                        style="width: 45px;">
                                     <div class="media-body">
                                         <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
                                         <div class="text-primary mb-2">

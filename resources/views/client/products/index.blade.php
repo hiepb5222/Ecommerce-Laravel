@@ -1,6 +1,6 @@
 <!-- Page Header Start -->
 @extends('client.layouts.app')
-@section('title', 'products')
+@section('title', 'Products')
 @section('content')
     <div class="row ">
         <div class="d-inline-flex" style="margin-left:40px">

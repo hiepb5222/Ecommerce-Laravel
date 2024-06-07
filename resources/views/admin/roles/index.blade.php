@@ -28,7 +28,7 @@
                             @can('super-admin')
                                 <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">Edit</a>
                                 <form action="{{ route('roles.destroy', $role->id) }}" id="form-delete{{ $role->id }}"
-                                    method="post">
+                                    method="post" class="d-inline">
                                     @csrf
                                     @method('delete')
 

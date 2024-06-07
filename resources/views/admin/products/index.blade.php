@@ -27,11 +27,11 @@
                         <th><img src="{{ $item->image_path }}"
                                 width="200px" height="200px" alt=""></th>
                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->price }}</td>
-                        <td>{{ $item->sale }}</td>
+                        <td>{{ number_format($item->price) }} VND</td>
+                        <td>{{ $item->sale }}%</td>
                         <td>
                             @can('show-product')
-                                <a href="{{ route('products.show', $item->id) }}" class="btn btn-info">Show</a>
+                                <a href="{{ route('products.show',  $item->id) }}" class="btn btn-info">Show</a>
                             @endcan
 
                             @can('update-product')
@@ -40,7 +40,7 @@
 
                             @can('delete-product')
                                 <form action="{{ route('products.destroy', $item->id) }}" id="form-delete{{ $item->id }}"
-                                    method="post">
+                                    method="post" class="d-inline">
                                     @csrf
                                     @method('delete')
 

@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="input-group-static col-5 mb-4">
                         <label>Image</label>
-                        <input type="file" accept="image/*" name="image" id="image-input" class="form-control">
+                        <input type="file" accept="image/*" name="image" id="image-input" class="form-control" multiple>
                         @error('image')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -50,7 +50,7 @@
 
                 <div class="form-group ">
                     <label>Description</label>
-                    <div class="row w-100 h-100">
+                    <div class="row w-100 h-100" >
                         <textarea name="description" id="description" class="form-control" cols="4" rows="5" style="width: 100%">{{ old('description') }} </textarea>
                     </div>
                     @error('description')
@@ -79,25 +79,34 @@
                 </button>
 
                 <!-- Modal -->
-                <!-- Modal -->
+                
                 <div class="modal fade" id="AddSizeModal" tabindex="-1" aria-labelledby="AddSizeModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="AddSizeModalLabel">Add size</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="modal" aria-label="Close"
+                                    style=" background-color: red;
+                                color: white;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
                             </div>
                             <div class="modal-body" id="AddSizeModalBody">
 
                             </div>
                             <div class="mt-3">
-                                <button type="button" class="btn  btn-primary btn-add-size">Add</button>
+                                <button type="button" class="btn  btn-primary btn-add-size ms-3">Add</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
 
 
         </div>

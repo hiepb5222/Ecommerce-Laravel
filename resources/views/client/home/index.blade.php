@@ -46,10 +46,17 @@
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">{{ $item->name }}</h6>
+                            @if ($item->sale >0)
+                            <div class="d-flex justify-content-center">
+                                <h6>{{ number_format($item->saleprice) }} VND</h6>
+                                <h6 class="text-muted ml-2"><del>{{  number_format($item->price) }} VND</del></h6>
+                            </div>
+                            @else
                             <div class="d-flex justify-content-center">
                                 <h6>{{ $item->price }}</h6>
-                                <h6 class="text-muted ml-2"><del>{{ $item->price }}</del></h6>
                             </div>
+                            @endif
+                            
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
                             <a href="{{ route('client.products.show', $item->id) }}" class="btn btn-sm text-dark p-0"><i
