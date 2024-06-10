@@ -25,6 +25,23 @@ class ProductController extends Controller
         return view('client.products.index', compact('products'));
     }
 
+    public function listSearch(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $products = $this->product->search($keyword)->get();
+        if ($products->isEmpty()) {
+            return view('client.products.index', compact('products'))->with(['message' =>'Không tìm thấy kết quả']);
+        }
+        return view('client.products.index', compact('products'));
+    }
+    public function autocompleteSearch(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $products = $this->product->search($keyword)->limit(5)->get(['name', 'slug']); // Lấy các thuộc tính cần thiết
+
+        return response()->json($products);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

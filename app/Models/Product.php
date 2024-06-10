@@ -71,4 +71,8 @@ class Product extends Model
 
         return $slug;
     }
+
+    public function scopeSearch($query, $keyword){
+        return $query->where('name', 'like', '%'.$keyword.'%');
+    }
 }

@@ -30,6 +30,8 @@ Route::get('/', [HomeController::class, 'index'])->name('client.home');
 
 Route::get('product/{category_id}', [ClientProductController::class, 'index'])->name('client.products.index');
 Route::get('product-detail/{slug}', [ClientProductController::class, 'show'])->name('client.products.show');
+Route::get('product', [ClientProductController::class, 'listSearch'])->name('client.product.index');
+Route::get('product-search', [ClientProductController::class, 'autocompleteSearch'])->name('client.products.autocomplete');
 
 Route::middleware('auth')->group(function () {
     Route::post('add-to-cart', [CartController::class, 'store'])->name('client.carts.add');
