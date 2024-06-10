@@ -31,7 +31,7 @@
                         <td>{{ $item->sale }}%</td>
                         <td>
                             @can('show-product')
-                                <a href="{{ route('products.show',  $item->id) }}" class="btn btn-info">Show</a>
+                                <a href="{{ route('products.show',  $item->slug) }}" class="btn btn-info">Show</a>
                             @endcan
 
                             @can('update-product')

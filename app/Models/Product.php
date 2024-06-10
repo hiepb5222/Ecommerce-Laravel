@@ -13,9 +13,11 @@ class Product extends Model
 
     protected $fillable =[
         'name',
+        'slug',
         'description',
         'sale',
         'price',
+        
     ];
     public function details()
     {
@@ -52,9 +54,21 @@ class Product extends Model
         return $this->attributes['sale'] ? $this->attributes['price'] - ($this->attributes['sale'] * 0.01 * $this->attributes['price']) :0;
     }
 
-    public function getSlugAttribute()
+     public function setNameAttribute($value)
     {
-        return Str::slug($this->name);
-        
+        $this->attributes['name'] = $value;
+        // Tạo slug từ trường name và lưu vào trường slug
+        $this->attributes['slug'] = $this->createUniqueSlug($value);
+    }
+    private function createUniqueSlug($name)
+    {
+        $slug = Str::slug($name);
+        $count = 1;
+
+        while (static::whereSlug($slug)->exists()) {
+            $slug = Str::slug($name) . '_' . $count++;
+        }
+
+        return $slug;
     }
 }

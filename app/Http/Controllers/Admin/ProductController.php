@@ -78,9 +78,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $product = $this->product->with(['details', 'categories'])->findOrFail($id);
+        // $product = $this->product->with(['details', 'categories'])->findOrFail($slug);
+        $product = $this->product->where('slug', $slug)->with(['details', 'categories'])->firstOrFail();
         $categories = $this->category->get(['id', 'name']);
         return view('admin.products.show', compact('product'));
     }

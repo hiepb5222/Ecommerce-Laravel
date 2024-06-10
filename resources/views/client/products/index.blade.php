@@ -180,7 +180,8 @@
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-between bg-light border">
-                                    <a href="{{ route('client.products.show', $item->id) }}"
+                                 
+                                    <a href="{{ route('client.products.show', $item->slug) }}"
                                         class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View
                                         Detail</a>
                                     <a href="" class="btn btn-sm text-dark p-0"><i
