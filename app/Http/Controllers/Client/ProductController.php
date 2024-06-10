@@ -52,9 +52,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $product = $this->product->with('details')->findOrFail($id);
+        $product = $this->product->where('slug', $slug)->with('details')->firstOrFail();
         return view('client.products.detail', compact('product'));
     }
 

@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
-        if(!Schema::hasColumn('coupon_user', 'order_id'))
+        if(Schema::hasColumn('coupon_user', 'order_id'))
         Schema::table('coupon_user',function(Blueprint $table){
             $table->foreignIdFor(Order::class);
         });
