@@ -36,18 +36,23 @@
                         class="text-primary font-weight-bold border px-3 mr-1">HQH</span>Shopper</h1>
             </a>
         </div>
-        <div class="col-lg-6 col-6 text-left">
-            <form action="">
+        <div class="col-lg-6 col-6 text-left" style="position:relative">
+            <form action="{{ route('client.product.index') }}" method="GET" id="search-form">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for products">
+                    <input type="text" name="keyword" id="search-input" class="form-control"
+                        placeholder="Search for products" autocomplete="off">
                     <div class="input-group-append">
-                        <span class="input-group-text bg-transparent text-primary">
+                        <button class="input-group-text bg-transparent text-primary" type="submit">
                             <i class="fa fa-search"></i>
-                        </span>
+                        </button>
                     </div>
+                </div>
+                <div id="autocomplete-results"
+                    style=" position: absolute;background-color: white; border: 1px solid #ddd;max-height: 200px;overflow-y: auto; z-index: 1000;">
                 </div>
             </form>
         </div>
+
         <div class="col-lg-3 col-6 text-right">
             <a href="{{ route('client.carts.index') }}" class="btn border">
                 <i class="fas fa-shopping-cart text-primary"></i>
@@ -56,3 +61,50 @@
         </div>
     </div>
 </div>
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#search-input').on('input', function() {
+                let keyword = $(this).val();
+                if (keyword.length > 0) {
+                    $.ajax({
+                        url: "{{ route('client.products.autocomplete') }}",
+                        type: "GET",
+                        data: {
+                            keyword: keyword
+                        },
+                        success: function(data) {
+                            let results = $('#autocomplete-results');
+                            results.empty();
+                            if (data.length > 0) {
+                                data.forEach(function(product) {
+                                    results.append(
+                                        '<div><a href="/product-detail/' +
+                                        product.slug + '">' + product.name +
+                                        '</a></div>');
+                                });
+                                if (data.length > 5) {
+                                    results.append('<div class="read-more">Read more...</div>');
+                                }
+                            } else {
+                                results.append(
+                                    '<div class="autocomplete-item disabled">No results found</div>'
+                                );
+                            }
+                        }
+                    });
+                } else {
+                    $('#autocomplete-results').empty();
+                }
+            });
+
+            // Hide autocomplete when clicking outside
+            // $(document).click(function(e) {
+            //     if (!$(e.target).closest('#autocomplete-results, #search-input').length) {
+            //         $('#autocomplete-results').empty();
+            //     }
+            // });
+        });
+    </script>
+@endsection
