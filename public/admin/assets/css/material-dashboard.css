@@ -25361,6 +25361,10 @@ body:not(.dark-version) .sidenav.bg-transparent .collapse .nav-item .nav-link.ac
   border: none;
 }
 
+#ofBar {
+  display: none !important;
+}
+
 .btn.btn-linkedin.btn-simple:hover,
 .btn.btn-linkedin.btn-simple:focus,
 .btn.btn-linkedin.btn-simple:hover:focus,

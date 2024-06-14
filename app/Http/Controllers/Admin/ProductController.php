@@ -41,7 +41,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = $this->category->get(['id', 'name']);
+        $categories = $this->category->get(['id', 'name','parent_id']);
+        
         return view('admin.products.create', compact('categories'));
     }
 
@@ -95,7 +96,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = $this->product->with(['details', 'categories'])->findOrFail($id);
-        $categories = $this->category->get(['id', 'name']);
+        $categories = $this->category->get(['id', 'name','parent_id']);
         return view('admin.products.edit', compact('product', 'categories'));
     }
 

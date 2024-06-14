@@ -8,6 +8,8 @@ $(() => {
         .catch((err) => {
             console.error(err.stack);
         });
+
+
     renderSizes(sizes);
     appendSizesToForm();
 
@@ -80,7 +82,7 @@ $(() => {
                         </div>
 
                         <div class="input-group input-group-static col-5 w-40">
-                            <label>Quantity</label>
+                            <label>Số Lượng</label>
                             <input type="number" value="${size.quantity}" class="form-control input-quantity" data-id="${size.id}">
                         </div>
                         <div class="w-20">

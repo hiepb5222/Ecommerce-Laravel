@@ -1,36 +1,36 @@
 @extends('admin.layouts.app')
-@section('title', 'Coupons')
+@section('title', 'Phiếu Giảm Giá')
 @section('content')
     <div class="card">
 
         @if (@session('message'))
             <h1 class="text-primary">{{ session('message') }}</h1>
         @endif
-        <h1>Coupon List</h1>
+        <h1>Danh sách phiếu giảm giá</h1>
         <div>
-            <a href="{{ route('coupons.create') }}" class="btn btn-primary">Create Coupon</a>
+            <a href="{{ route('coupons.create') }}" class="btn btn-primary">Tạo phiếu giảm giá</a>
         </div>
 
         <div>
             <table class="table table-hover">
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Value</th>
-                    <th>Expiry Date</th>
-                    <th>Action</th>
+                    <th>Mã Giảm Giá</th>
+                    <th>Thể Loại</th>
+                    <th>Giá Trị</th>
+                    <th>Hạn Sử Dụng</th>
+                    <th>Thao Tác</th>
                 </tr>
-                @foreach ($coupons as $item)
+                @foreach ($coupons as $index => $item)
                     <tr>
-                        <td>{{ $item->id }}</td>
+                        <td>{{ $index + 1 }}</td>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->type }}</td>
                         <td>{{ $item->value }}</td>
                         <td>{{ $item->expiry_date }}</td>
                         <td>
                             @can('update-coupon')
-                                <a href="{{ route('coupons.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('coupons.edit', $item->id) }}" class="btn btn-warning">Sửa</a>
                             @endcan
                             
                             @can('delete-coupon')
@@ -40,7 +40,7 @@
                                     @method('delete')
 
                                 </form>
-                                <button class='btn btn-delete btn btn-danger' data-id={{ $item->id }}>Delete</button>
+                                <button class='btn btn-delete btn btn-danger' data-id={{ $item->id }}>Xóa</button>
                             @endcan
 
                         </td>

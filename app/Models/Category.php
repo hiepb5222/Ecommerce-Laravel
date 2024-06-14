@@ -26,7 +26,7 @@ class Category extends Model
 
     public function getParentNameAttribute()
     {
-        return optional($this->parent)->name;
+        return optional($this->parent)->name ?? '';
     }
 
     public function getParents()
