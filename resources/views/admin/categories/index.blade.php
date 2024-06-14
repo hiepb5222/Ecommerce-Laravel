@@ -1,33 +1,33 @@
 @extends('admin.layouts.app')
-@section('title', 'Category')
+@section('title', 'Danh Mục')
 @section('content')
     <div class="card">
 
         @if (@session('message'))
             <h1 class="text-primary">{{ session('message') }}</h1>
         @endif
-        <h1>Category List</h1>
+        <h1>Danh sách danh mục</h1>
         <div>
-            <a href="{{ route('categories.create') }}" class="btn btn-primary">Create Category</a>
+            <a href="{{ route('categories.create') }}" class="btn btn-primary">Tạo Danh mục mới</a>
         </div>
 
         <div>
             <table class="table table-hover">
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>DisplayName</th>
-                    <th>Action</th>
+                    <th>Tên Danh Mục</th>
+                    <th>Danh Mục Cha</th>
+                    <th>Thao Tác</th>
                 </tr>
-                @foreach ($categories as $item)
+                @foreach ($categories as $index => $item)
                     <tr>
-                        <td>{{ $item->id }}</td>
+                        <td>{{ $index + 1 }}</td>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->parent_name }}</td>
                         <td>
                             
                             @can('update-category')
-                                <a href="{{ route('categories.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('categories.edit', $item->id) }}" class="btn btn-warning">Sửa</a>
                             @endcan
 
                             @can('delete-category')
@@ -37,7 +37,7 @@
                                     @method('delete')
 
                                 </form>
-                                <button class='btn btn-delete btn btn-danger' data-id={{ $item->id }}>Delete</button>
+                                <button class='btn btn-delete btn btn-danger' data-id={{ $item->id }}>Xóa</button>
                             @endcan
                             
 

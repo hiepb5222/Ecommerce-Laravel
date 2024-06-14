@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
-@section('title', ' Show Product')
+@section('title', ' Xem Sản Phẩm')
 @section('content')
     <div class="card">
-        <h1>Show Product</h1>
+        <h1>Xem Sản Phẩm</h1>
         <div>
 
             <div class="row">
                 <div class="">
-                    <label>Image</label>
+                    <label>Ảnh Sản Phẩm</label>
                     <div class="col-5">
                         <img src="{{ $product->images->count() > 0 ? asset('upload/' . $product->images->first()->url) : 'upload/default.jpg' }}"
                             id="show-image" alt="">
@@ -16,22 +16,22 @@
 
 
                 <div class="4">
-                    <label>Name : {{ $product->name }}</label>
+                    <label>Tên Sản Phẩm : {{ $product->name }}</label>
 
                 </div>
 
                 <div class="4">
-                    <label>Price : {{ $product->price }}</label>
+                    <label>Giá Sản Phẩm : {{ $product->price }}</label>
 
                 </div>
 
                 <div class="4">
-                    <label>Sale : {{ $product->sale }}</label>
+                    <label>Khuyến Mãi : {{ $product->sale }} %</label>
 
                 </div>
 
                 <div class="form-group ">
-                    <label>Description</label>
+                    <label>Mô Tả: </label>
                     <div class="row w-100 h-100">
                         {!! $product->description !!}
                     </div>
@@ -54,8 +54,7 @@
 
 
                 <div class="input-group input-group-static mb-4">
-                    <label for="exampleFormControlSelect1" class="ms-0">Category: </label>
-
+                    <label for="exampleFormControlSelect1" class="ms-0">Danh Mục: </label>
                     @foreach ($product->categories as $item)
                         <p> {{ $item->name }}</p>
                     @endforeach
@@ -69,7 +68,7 @@
         </div>
 
 
-        <button type="submit" class="btn btn-submit btn btn-primary"> Submit</button>
+        <a href="{{route('products.index')}}" type="submit" class="btn btn-submit btn btn-primary"> Đóng</a>
 
     </div>
     </div>

@@ -1,11 +1,11 @@
 @extends('admin.layouts.app')
-@section('title', 'orders')
+@section('title', 'Đơn hàng')
 @section('content')
 
     <div class="card">
 
         <h1>
-            Orders
+            Đơn Hàng
         </h1>
         <div class="container-fluid pt-5">
 
@@ -14,19 +14,19 @@
                     <table class="table table-hover">
                         <tr>
                             <th>#</th>
-                            <th>status</th>
-                            <th>total</th>
-                            <th>ship</th>
-                            <th>customer name</th>
-                            <th>customer email</th>
-                            <th>customer address</th>
-                            <th>note</th>
-                            <th>payment</th>
+                            <th>Trạng Thái</th>
+                            <th>Tổng Tiền</th>
+                            <th>Tiền Ship</th>
+                            <th>Tên Khách Hàng</th>
+                            <th>Email Khách Hàng</th>
+                            <th>Địa Chỉ Khách Hàng</th>
+                            <th>Ghi Chú</th>
+                            <th>Thanh Toán</th>
                         </tr>
 
-                        @foreach ($orders as $item)
+                        @foreach ($orders as $index => $item)
                             <tr>
-                                <td>{{ $item->id }}</td>
+                                <td>{{ $index +1 }}</td>
                                 <td>
 
                                     <div class="input-group input-group-static mb-4">

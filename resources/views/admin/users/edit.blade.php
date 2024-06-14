@@ -1,15 +1,15 @@
 @extends('admin.layouts.app')
-@section('title',' Edit Roles'.$user->name)
+@section('title',' Chỉnh Sửa Người Dùng'.$user->name)
 @section('content')
     <div class="card">
-        <h1>Edit User</h1>
+        <h1>Sửa Người Dùng</h1>
         <div>
             <form action="{{ route('users.update',$user->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="row">
                     <div class="input-group-static col-5 mb-4">
-                        <label>Image</label>
+                        <label>Ảnh Người Dùng</label>
                         <input type="file" accept="image/*" name="image" id="image-input" class="form-control">
                         @error('image')
                             <span class="text-danger">{{ $message }}</span>
@@ -22,7 +22,7 @@
 
 
                 <div class="input-group input-group-static mb-4">
-                    <label>Name</label>
+                    <label>Tên Người Dùng</label>
                     <input type="text" name="name" value="{{ old('name') ?? $user->name}}" class="form-control">
 
                     @error('name')
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="input-group input-group-static mb-4">
-                    <label>Phone</label>
+                    <label>Số Điện Thoại</label>
                     <input type="text" name="phone" value="{{ old('phone') ??$user->phone}}" class="form-control">
 
                     @error('phone')
@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="input-group input-group-static mb-4">
-                    <label>Password</label>
+                    <label>Mật Khẩu</label>
                     <input type="password" name="password" class="form-control">
 
                     @error('password')
@@ -58,10 +58,10 @@
                 </div>
 
                 <div class="input-group input-group-static mb-4">
-                    <label for="exampleFormControlSelect1" class="ms-0">Gender</label>
+                    <label for="exampleFormControlSelect1" class="ms-0">Giới Tính</label>
                     <select class="form-control" name="gender" value={{ $user ->gender}}>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="male">Nam</option>
+                        <option value="female">Nữ</option>
                     </select>
 
                     @error('gender')
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="input-group input-group-static mb-4">
-                    <label>Address</label>
+                    <label>Địa Chỉ</label>
                     <textarea name="address" class="form-control">{{ old('address') ?? $user->address}}</textarea>
 
                     @error('address')
@@ -80,7 +80,7 @@
 
 
                 <div class="form-group">
-                    <label>Roles</label>
+                    <label>Phân Quyền</label>
                     <div class="row">
                         @foreach ($roles as $groupName => $role)
                             <div class="col-4">

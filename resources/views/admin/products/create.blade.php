@@ -1,15 +1,15 @@
 @extends('admin.layouts.app')
-@section('title', ' Create Product')
+@section('title', ' Thêm Sản Phẩm')
 @section('content')
     <div class="card">
-        <h1>Create Product</h1>
+        <h1>Thêm Sản Phẩm</h1>
         <div>
             <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <div class="row">
                     <div class="input-group-static col-5 mb-4">
-                        <label>Image</label>
+                        <label>Ảnh Sản Phẩm</label>
                         <input type="file" accept="image/*" name="image" id="image-input" class="form-control" multiple>
                         @error('image')
                             <span class="text-danger">{{ $message }}</span>
@@ -22,7 +22,7 @@
 
 
                 <div class="input-group input-group-static mb-4">
-                    <label>Name</label>
+                    <label>Tên Sản Phẩm</label>
                     <input type="text" name="name" value="{{ old('name') }}" class="form-control">
 
                     @error('name')
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="input-group input-group-static mb-4">
-                    <label>Price</label>
+                    <label>Giá Sản Phẩm</label>
                     <input type="number" name="price" value="{{ old('price') }}" class="form-control">
 
                     @error('price')
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="input-group input-group-static mb-4">
-                    <label>Sale</label>
+                    <label>Khuyến Mãi</label>
                     <input type="number" name="sale" value="{{ old('sale') }}" class="form-control">
 
                     @error('sale')
@@ -49,20 +49,26 @@
                 </div>
 
                 <div class="form-group ">
-                    <label>Description</label>
-                    <div class="row w-100 h-100" >
-                        <textarea name="description" id="description" class="form-control" cols="4" rows="5" style="width: 100%">{{ old('description') }} </textarea>
-                    </div>
+                    <label>Mô Tả</label>
+                    <textarea name="description" id="description" >{{ old('description') }} </textarea>
                     @error('description')
                         <span class="text-danger"> {{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="input-group input-group-static mb-4">
-                    <label for="exampleFormControlSelect1" class="ms-0">Category</label>
+                    <label for="exampleFormControlSelect1" class="ms-0">Danh Mục</label>
                     <select class="form-control" name="category_ids[]" multiple>
                         @foreach ($categories as $item)
+                            @if ($item->parentname)
+                            @continue
+                            @endif
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @if ($item->childrens->isNotEmpty())
+                                @foreach ($item->childrens as $child)
+                                    <option value="{{ $child->id }}">-- {{ $child->name }}</option>
+                                @endforeach
+                            @endif
                         @endforeach
 
                     </select>
@@ -75,18 +81,19 @@
                 <input type="hidden" id="inputSize" name='sizes'>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddSizeModal">
-                    Add size
+                    Thêm Size
                 </button>
 
                 <!-- Modal -->
-                
+
                 <div class="modal fade" id="AddSizeModal" tabindex="-1" aria-labelledby="AddSizeModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="AddSizeModalLabel">Add size</h5>
-                                <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="modal" aria-label="Close"
+                                <h5 class="modal-title" id="AddSizeModalLabel">Thêm Size</h5>
+                                <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="modal"
+                                    aria-label="Close"
                                     style=" background-color: red;
                                 color: white;
                                 display: flex;
@@ -100,7 +107,7 @@
 
                             </div>
                             <div class="mt-3">
-                                <button type="button" class="btn  btn-primary btn-add-size ms-3">Add</button>
+                                <button type="button" class="btn  btn-primary btn-add-size ms-3">Thêm</button>
                             </div>
                         </div>
                     </div>
@@ -112,7 +119,7 @@
         </div>
 
 
-        <button type="submit" class="btn btn-submit btn btn-primary"> Submit</button>
+        <button type="submit" class="btn btn-submit btn btn-primary"> Thêm Mới</button>
         </form>
     </div>
     </div>
@@ -131,9 +138,4 @@
         }];
     </script>
     <script src="{{ asset('admin/assets/base/product.js') }}"></script>
-
-
-
-
-
 @endsection

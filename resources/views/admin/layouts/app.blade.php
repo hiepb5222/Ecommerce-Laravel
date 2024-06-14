@@ -8,11 +8,11 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('admin/assets/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('admin/assets/img/favicon.png') }}">
     <title>
-        @yield('title', 'Dashboard')
+        @yield('title', 'Bảng Điều Khiển')
     </title>
 
 
-    <link rel="canonical" href="https://www.creative-tim.com/product/material-dashboard" />
+{{-- <link rel="canonical" href="https://www.creative-tim.com/product/material-dashboard" /> --}}
 
     <meta name="keywords"
         content="creative tim, html dashboard, html css dashboard, web dashboard, bootstrap 5 dashboard, bootstrap 5, css3 dashboard, bootstrap 5 admin, Material Dashboard bootstrap 5 dashboard, frontend, responsive bootstrap 5 dashboard, free dashboard, free admin dashboard, free bootstrap 5 admin dashboard">
@@ -31,7 +31,7 @@
     <meta property="fb:app_id" content="655968634437471">
     <meta property="og:title" content="Material Dashboard 2 by Creative Tim" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="http://demos.creative-tim.com/material-dashboard/pages/dashboard.html" />
+    {{-- <meta property="og:url" content="http://demos.creative-tim.com/material-dashboard/pages/dashboard.html" /> --}}
     <meta property="og:image"
         content="https://s3.amazonaws.com/creativetim_bucket/products/450/original/material-dashboard.jpg" />
     <meta property="og:description"
@@ -59,7 +59,6 @@
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-
 
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>

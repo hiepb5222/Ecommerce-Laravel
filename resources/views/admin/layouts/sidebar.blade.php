@@ -4,7 +4,7 @@
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard "
+        <a class="navbar-brand m-0" href=""
             target="_blank">
             <img src="{{ auth()->user()->image_path }}" class="navbar-brand-img h-100" alt="main_logo">
             <span class="ms-1 font-weight-bold text-white">Hello {{auth()->user()->name}}</span>
@@ -19,7 +19,7 @@
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
-                    <span class="nav-link-text ms-1">Dashboard</span>
+                    <span class="nav-link-text ms-1">Bảng Điều Khiển</span>
                 </a>
             </li>
 
@@ -30,7 +30,7 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">table_view</i>
                         </div>
-                        <span class="nav-link-text ms-1">Role</span>
+                        <span class="nav-link-text ms-1">Phân Quyền</span>
                     </a>
                 </li>
             @endhasrole
@@ -42,7 +42,7 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">person</i>
                         </div>
-                        <span class="nav-link-text ms-1">User</span>
+                        <span class="nav-link-text ms-1">Người Dùng</span>
                     </a>
                 </li>
             @endcan
@@ -54,7 +54,7 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">view_in_ar</i>
                         </div>
-                        <span class="nav-link-text ms-1">Product</span>
+                        <span class="nav-link-text ms-1">Sản Phẩm</span>
                     </a>
                 </li>
             @endcan
@@ -67,7 +67,7 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">category</i>
                         </div>
-                        <span class="nav-link-text ms-1">Category</span>
+                        <span class="nav-link-text ms-1">Danh Mục Sản Phẩm</span>
                     </a>
                 </li>
             @endcan
@@ -80,7 +80,7 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
-                        <span class="nav-link-text ms-1">Coupon</span>
+                        <span class="nav-link-text ms-1">Phiếu Giảm Giá</span>
                     </a>
                 </li>
             @endcan
@@ -92,7 +92,7 @@
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">shopping_cart</i>
                         </div>
-                        <span class="nav-link-text ms-1">Order</span>
+                        <span class="nav-link-text ms-1">Đơn Hàng</span>
                     </a>
                 </li>
             @endcan
