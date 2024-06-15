@@ -4,7 +4,23 @@
   @section('content')
       <div class="container-fluid pt-5">
           @if (session('message'))
-              <h1 class="text-primary">{{ session('message') }}</h1>
+              <script>
+                  document.addEventListener('DOMContentLoaded', function() {
+                      Swal.fire({
+                          toast: true,
+                          position: 'top-end',
+                          icon: 'success',
+                          title: '{{ session('message') }}',
+                          showConfirmButton: false,
+                          timer: 3000,
+                          timerProgressBar: true,
+                          didOpen: (toast) => {
+                              toast.addEventListener('mouseenter', Swal.stopTimer)
+                              toast.addEventListener('mouseleave', Swal.resumeTimer)
+                          }
+                      });
+                  });
+              </script>
           @endif
 
 

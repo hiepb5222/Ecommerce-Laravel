@@ -11,8 +11,36 @@
     </div>
     <!-- Page Header End -->
     @if (session('message'))
-        <h2 class="" style="text-align: center; width:100%; color:red"> {{ session('message') }}</h2>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '{{ session('message') }}',
+                    showConfirmButton: false,
+                    timer: 1000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+            });
+        </script>
     @endif
+    @if (session('messageSize'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: '{{ session('messageSize') }}',
+                showConfirmButton: true
+            });
+        });
+    </script>
+@endif
 
     <!-- Shop Detail Start -->
 

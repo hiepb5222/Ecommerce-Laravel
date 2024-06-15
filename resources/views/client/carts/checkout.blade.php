@@ -7,10 +7,10 @@
             @csrf
             <div class="col-lg-8">
                 <div class="mb-4">
-                    <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
+                    <h4 class="font-weight-semi-bold mb-4">Thông tin giao hàng</h4>
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label>Name</label>
+                            <label>Tên Khách Hàng</label>
                             <input class="form-control" value="{{ old('customer_name') }}" name="customer_name"
                                 type="text" placeholder="John">
                             @error('customer_name')
@@ -28,7 +28,7 @@
                             @enderror ()
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Mobile No</label>
+                            <label>Số Điện Thoại</label>
                             <input class="form-control" name="customer_phone" value="{{ old('customer_phone') }}"
                                 type="text" placeholder="+123 456 789">
                             @error('customer_phone')
@@ -36,7 +36,7 @@
                             @enderror ()
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Address </label>
+                            <label>Địa Chỉ</label>
                             <input class="form-control" name="customer_address" value="{{ old('customer_address') }}"
                                 type="text" placeholder="123 Street">
                             @error('customer_address')
@@ -44,7 +44,7 @@
                             @enderror ()
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Note </label>
+                            <label>Ghi Chú </label>
                             <input class="form-control" value="{{ old('note') }}" name="note" type="text"
                                 placeholder="123 Street">
                             @error('note')
@@ -59,10 +59,10 @@
             <div class="col-lg-4">
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
-                        <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+                        <h4 class="font-weight-semi-bold m-0">Tổng Đơn Hàng</h4>
                     </div>
                     <div class="card-body">
-                        <h5 class="font-weight-medium mb-3">Products</h5>
+                        <h5 class="font-weight-medium mb-3">Danh sách sản phẩm</h5>
                         @foreach ($cart->products as $item)
                             <div class="d-flex justify-content-between">
                                 <p> {{ $item->product_quantity }} x {{ $item->product->name }}</p>
@@ -85,30 +85,30 @@
                         @endforeach
                         <hr class="mt-0">
                         <div class="d-flex justify-content-between mb-3 pt-1">
-                            <h6 class="font-weight-medium">Subtotal</h6>
+                            <h6 class="font-weight-medium">Giá đơn hàng</h6>
                             <h6 class="font-weight-medium total-price" data-price="{{ $cart->total_price }}">
                                 ${{ $cart->total_price }}</h6>
 
                         </div>
                         <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">Shipping</h6>
+                            <h6 class="font-weight-medium">Phí giao hàng</h6>
                             <h6 class="font-weight-medium shipping" data-price="20">$20</h6>
                             <input type="hidden" value="20" name="ship">
 
                         </div>
                         @if (session('discount_amount_price'))
                             <div class="d-flex justify-content-between">
-                                <h6 class="font-weight-medium">Coupon </h6>
+                                <h6 class="font-weight-medium">Giảm Giá </h6>
                                 <h6 class="font-weight-medium coupon-div"
                                     data-price="{{ session('discount_amount_price') }}">
-                                    ${{ session('discount_amount_price') }}</h6>
+                                    -{{ session('discount_amount_price') }} VND</h6>
                             </div>
                         @endif
 
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
-                            <h5 class="font-weight-bold">Total</h5>
+                            <h5 class="font-weight-bold">Tổng cộng</h5>
                             <h5 class="font-weight-bold total-price-all"></h5>
                             <input type="hidden" id="total" value="" name="total">
                         </div>
@@ -116,20 +116,19 @@
                 </div>
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
-                        <h4 class="font-weight-semi-bold m-0">Payment</h4>
+                        <h4 class="font-weight-semi-bold m-0">Phương thức thanh toán</h4>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" checked value="monney" name="payment">
-                                <label class="custom-control-label">Money</label>
+                                <label class="custom-control-label">Tiền mặt</label>
                             </div>
                         </div>
 
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
-                        <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place
-                            Order</button>
+                        <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Xác Nhận</button>
                     </div>
                 </div>
             </div>
