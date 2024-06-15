@@ -16,9 +16,14 @@ class OrderController extends Controller
         $this->order = $order;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $orders =  $this->order->getWithPaginateBy(auth()->user()->id);
+        // $orders =  $this->order->getWithPaginateBy(auth()->user()->id);
+        $orders = $this->order->latest('id')->paginate(10);
+        if ($request->has('keyword') && $request->input('keyword') !== '') {
+            $keyword = $request->input('keyword');
+            $orders = $this->order->search($keyword)->latest('id')->paginate(5);
+        }
         return view('admin.orders.index', compact('orders'));
     }
 

@@ -340,4 +340,11 @@
     });
 </script>
 <script src="{{ asset('admin/assets/base/base.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var toastEl = document.getElementById('toastMessage');
+        var toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    });
+</script>
 @yield('script')

@@ -28,9 +28,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = $this->product->latest('id')->paginate(5);
+
+        if ($request->has('keyword') && $request->input('keyword') !== '') {
+            $keyword = $request->input('keyword');
+            $products = $this->product->search($keyword)->latest('id')->paginate(5);
+        }
+
         return view('admin.products.index', compact('products'));
     }
 
@@ -70,7 +76,7 @@ class ProductController extends Controller
         }
         $this->productDetail->insert($sizeArray);
         
-        return redirect()->route('products.index')->with(['message' =>'update product successfully']);
+        return redirect()->route('products.index')->with(['message' =>'Cập nhập sản phẩm thành công']);
     }
 
     /**
@@ -127,7 +133,7 @@ class ProductController extends Controller
         $product->details()->delete();
         $this->productDetail->insert($sizeArray);
         
-        return redirect()->route('products.index')->with(['message' =>'create product successfully']);
+        return redirect()->route('products.index')->with(['message' =>'Thêm sản phẩm thành công']);
     }
 
     /**
@@ -144,6 +150,7 @@ class ProductController extends Controller
         $product->images()->delete();
         $imageName = $product->images->count() >0 ? $product->images->first()->url : '';
         $this->product->deleteImage($imageName);
-        return to_route('products.index')->with(['message'=> 'delete success']);
+        return to_route('products.index')->with(['message'=> 'Xóa thành công']);
     }
+
 }

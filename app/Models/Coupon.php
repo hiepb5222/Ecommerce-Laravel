@@ -31,4 +31,8 @@ class Coupon extends Model
         return $this->whereName($name)->whereDoesntHave('users', fn($q) => $q->where('users.id', $userId))
         ->whereDate('expiry_date', '>=', Carbon::now())->first();
     }
+
+    public function scopeSearch($query, $keyword){
+        return $query->where('name', 'like', '%'.$keyword.'%');
+    }
 }

@@ -56,4 +56,8 @@ class User extends Authenticatable
     {
         return asset($this->images->count() >0 ? 'upload/' .$this->images->first()->url : 'upload/default.jpg');
     }
+
+    public function scopeSearch($query, $keyword){
+        return $query->where('name', 'like', '%'.$keyword.'%');
+    }
 }
