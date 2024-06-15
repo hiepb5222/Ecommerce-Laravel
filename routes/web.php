@@ -54,7 +54,7 @@ Auth::routes();
 
 
 //route admin
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','redirectIfUser')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route::resource('roles', RoleController::class);
     // Route::resource('users', UserController::class);
@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
     // Route::resource('users', UserController::class);
     Route::prefix('users')->controller(UserController::class)->name('users.')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:show-user');
-        Route::post('/', 'store')->name('store');
+        Route::post('/', 'store')->name('store')->middleware('permission:create-user');
         Route::get('/create', 'create')->name('create')->middleware('permission:create-user');
         Route::get('/{user}', 'show')->name('show')->middleware('permission:show-user');
         Route::put('/{user}', 'update')->name('update')->middleware('permission:update-user');
@@ -105,6 +105,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/{product}', 'update')->name('update')->middleware('permission:update-product');
         Route::delete('/{product}', 'destroy')->name('destroy')->middleware('permission:delete-product');
         Route::get('/{product}/edit', 'edit')->name('edit')->middleware('permission:update-product');
+        
     });
 
 

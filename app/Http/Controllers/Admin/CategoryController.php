@@ -15,9 +15,13 @@ class CategoryController extends Controller
         $this->category = $category;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $categories = Category::latest('id')->paginate(3);
+        if ($request->has('keyword') && $request->input('keyword') !== '') {
+            $keyword = $request->input('keyword');
+            $categories = $this->category->search($keyword)->latest('id')->paginate(5);
+        }
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -43,7 +47,7 @@ class CategoryController extends Controller
         $dataCreate = $request->all();
         $category = $this->category->create($dataCreate);
 
-        return redirect()->route('categories.index')->with(['message' => 'create new category', $category->name . " success"]);
+        return redirect()->route('categories.index')->with(['message' => 'Thêm mới ', $category->name . " thành công"]);
     }
 
     /**
@@ -84,7 +88,7 @@ class CategoryController extends Controller
         $category = $this->category->findOrFail($id);
         $category->update($dataUpdate);
 
-        return redirect()->route('categories.index')->with(['message' => 'update category', $category->name . " success"]);
+        return redirect()->route('categories.index')->with(['message' => 'Cập nhật ', $category->name . " thành công"]);
     }
 
     /**
@@ -99,6 +103,6 @@ class CategoryController extends Controller
         $category = $this->category->findOrFail($id);
         $category->delete();
 
-        return redirect()->route('categories.index')->with(['message' => 'Delete category ', $category->name . " success"]);
+        return redirect()->route('categories.index')->with(['message' => 'Xóa ', $category->name . " thành công"]);
     }
 }

@@ -33,4 +33,8 @@ class Category extends Model
     {
         return Category::whereNull('parent_id')->with('childrens')->get(['id', 'name']);
     }
+
+    public function scopeSearch($query, $keyword){
+        return $query->where('name', 'like', '%'.$keyword.'%');
+    }
 }

@@ -42,11 +42,11 @@ class RoleController extends Controller
     public function store(CreateRoleRequest $request)
     {
         $dataCreate = $request->all();
-        $dataCreate['guard_name']='web';
+        $dataCreate['guard_name'] = 'web';
         $role = Role::create($dataCreate);
-       
+
         $role->permissions()->attach($dataCreate['permission_ids']);
-        return to_route('roles.index')->with(['message' =>'create success']);
+        return to_route('roles.index')->with(['message' => 'Thêm mới thành công']);
     }
 
     /**
@@ -83,10 +83,25 @@ class RoleController extends Controller
     public function update(UpdateRoleRequest $request, $id)
     {
         $role = Role::findOrFail($id);
+
+        // Lấy toàn bộ dữ liệu từ request
         $dataUpdate = $request->all();
+
+        // Kiểm tra xem 'permission_ids' có tồn tại trong dữ liệu đầu vào không
+        $permissionIds = isset($dataUpdate['permission_ids']) ? $dataUpdate['permission_ids'] : [];
+
+        // Cập nhật thông tin vai trò
         $role->update($dataUpdate);
-        $role->permissions()->sync($dataUpdate['permission_ids']);
-        return to_route('roles.index')->with(['message' =>'update success']);
+
+        // Đồng bộ hóa quyền của vai trò nếu 'permission_ids' được cung cấp
+        if (!empty($permissionIds)) {
+            $role->permissions()->sync($permissionIds);
+        } else {
+           
+            $role->permissions()->sync([]);
+        }
+
+        return redirect()->route('roles.index')->with('message', 'Cập nhật thành công');
     }
 
     /**
@@ -98,6 +113,6 @@ class RoleController extends Controller
     public function destroy($id)
     {
         Role::destroy($id);
-        return to_route('roles.index')->with(['message' =>'delete success']);
+        return to_route('roles.index')->with(['message' => 'Xóa thành công']);
     }
 }

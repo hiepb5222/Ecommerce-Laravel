@@ -85,7 +85,7 @@
                 </li>
             @endcan
 
-            @can('show-order')
+            @can('list-order')
                 <li class="nav-item">
                     <a class="nav-link text-white {{ request()->routeIs('admin.orders.*') ? 'bg-gradient-primary active' : '' }}"
                         href="{{ route('admin.orders.index') }}">

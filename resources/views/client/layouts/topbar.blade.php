@@ -99,12 +99,12 @@
                 }
             });
 
-            // Hide autocomplete when clicking outside
-            // $(document).click(function(e) {
-            //     if (!$(e.target).closest('#autocomplete-results, #search-input').length) {
-            //         $('#autocomplete-results').empty();
-            //     }
-            // });
+            Hide autocomplete when clicking outside
+            $(document).click(function(e) {
+                if (!$(e.target).closest('#autocomplete-results, #search-input').length) {
+                    $('#autocomplete-results').empty();
+                }
+            });
         });
     </script>
 @endsection

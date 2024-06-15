@@ -1,12 +1,24 @@
 @extends('admin.layouts.app')
 @section('title', 'Đơn hàng')
 @section('content')
-
+@can('list-order')
     <div class="card">
-
+        <div class="row mb-3">
         <h1>
             Đơn Hàng
         </h1>
+        
+        <div class="col-md-5">
+            <form action="{{ route('admin.orders.index') }}" method="GET" id="search-form">
+                <div class="d-flex align-items-center">
+                    <div class="input-group input-group-outline flex-grow-1"> 
+                        <label class="form-label">Tìm kiếm tên khách hàng</label>
+                        <input type="text" name="keyword" id="search-input" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
         <div class="container-fluid pt-5">
 
             <div class="col card">
@@ -62,25 +74,5 @@
 @endsection
 @section('script')
     <script src="{{ asset('admin/assets/order/order.js')}}"></script>
-    {{-- <script>
-        $(function() {
-            $(document).on("change", ".select-status", function(e) {
-                e.preventDefault();
-                let url = $(this).data("action");
-                let data = {
-                    status: $(this).val(),
-                    _token: '{{ csrf_token() }}'
-                };
-                $.post(url, data, (res) => {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "success",
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
-                });
-            });
-        });
-    </script> --}}
 @endsection
+@endcan

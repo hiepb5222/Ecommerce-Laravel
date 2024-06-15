@@ -24,9 +24,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = User::latest('id')->paginate(5);
+        if ($request->has('keyword') && $request->input('keyword') !== '') {
+            $keyword = $request->input('keyword');
+            $users = $this->user->search($keyword)->latest('id')->paginate(5);
+        }
         return view('admin.users.index', compact('users'));
     }
 
@@ -56,7 +60,7 @@ class UserController extends Controller
         $user =$this ->user ->create($dataCreate);
         $user ->images()->create(['url' =>$dataCreate['image']]);
         $user->roles()->attach($dataCreate['role_ids']?? []);
-        return to_route('users.index')->with(['message'=> 'create succesc']);
+        return to_route('users.index')->with(['message'=> 'Thêm mới thành công']);
     }
 
     /**
@@ -103,7 +107,7 @@ class UserController extends Controller
         $user ->images()->delete();
         $user ->images()->create(['url' =>$dataUpdate['image']]);
         $user->roles()->sync($dataUpdate['role_ids'] ?? []);
-        return to_route('users.index')->with(['message'=> 'update success']);
+        return to_route('users.index')->with(['message'=> 'Cập nhật thành công']);
     }
 
     /**
@@ -119,6 +123,6 @@ class UserController extends Controller
         $imageName = $user->images->count() >0 ? $user->images->first()->url : '';
         $this->user->deleteImage($imageName);
         $user->delete();
-        return to_route('users.index')->with(['message'=> 'delete success']);
+        return to_route('users.index')->with(['message'=> 'Xóa thành công']);
     }
 }

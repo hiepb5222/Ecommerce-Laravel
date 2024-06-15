@@ -20,9 +20,13 @@ class CouponController extends Controller
     {
         $this->coupon = $coupon;
     }
-    public function index()
+    public function index(Request $request)
     {
         $coupons = $this->coupon->latest('id')->paginate(5);
+        if ($request->has('keyword') && $request->input('keyword') !== '') {
+            $keyword = $request->input('keyword');
+            $coupons = $this->coupon->search($keyword)->latest('id')->paginate(5);
+        }
         return view('admin.coupons.index', compact('coupons'));
     }
 
@@ -48,7 +52,7 @@ class CouponController extends Controller
 
         $this->coupon->create($dataCreate);
 
-        return redirect()->route('coupons.index')->with(['message'=>'Success Create']);
+        return redirect()->route('coupons.index')->with(['message'=>'Thêm thành công']);
     }
 
     /**
@@ -86,7 +90,7 @@ class CouponController extends Controller
         $coupon =$this->coupon->findOrFail($id);
         $dataUpdate = $request->all();
         $coupon->update($dataUpdate);
-        return redirect()->route('coupons.index')->with(['message'=>'Success Update']);
+        return redirect()->route('coupons.index')->with(['message'=>'Cập nhật thành công']);
     }
 
     /**
@@ -99,6 +103,6 @@ class CouponController extends Controller
     {
         $coupon =$this->coupon->findOrFail($id);
         $coupon->delete();
-        return to_route('coupons.index')->with(['message' =>'Delete '.$coupon->name .' success']);
+        return to_route('coupons.index')->with(['message' =>'Xóa '.$coupon->name .' thành công']);
     }
 }
