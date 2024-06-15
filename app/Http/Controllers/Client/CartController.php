@@ -80,9 +80,9 @@ class CartController extends Controller
                 $dataCreate['product_id'] = $request->product_id;
                 $this->cartProduct->create($dataCreate);
             }
-            return back()->with(['message' => 'Them thanh cong']);
+            return back()->with(['message' => 'Thêm Thành công']);
         } else {
-            return back()->with(['message' => 'Ban chua chon size']);
+            return back()->with(['messageSize' => 'Bạn chưa chọn size']);
         }
     }
 

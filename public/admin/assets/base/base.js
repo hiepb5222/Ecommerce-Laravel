@@ -1,13 +1,13 @@
 function confirmDelete() {
     return new Promise((resolve, reject) => {
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "Bạn Có Chắc Chắn Xóa Không",
+            text: "Bạn sẽ không thể hoàn lại thao tác này",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
+            confirmButtonText: "Xác nhận xóa",
         }).then((result) => {
             if (result.isConfirmed) {
                 resolve(true);
