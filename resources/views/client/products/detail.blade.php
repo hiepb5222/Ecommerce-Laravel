@@ -4,9 +4,9 @@
     <!-- Page Header Start -->
     <div class="row" style="margin-left: 50px">
         <div class="d-inline-flex">
-            <p class="m-0"><a href="">Home</a></p>
+            <p class="m-0"><a href="">Trang chủ</a></p>
             <p class="m-0 px-2">/</p>
-            <p class="m-0">Shop Detail</p>
+            <p class="m-0">Sản Phẩm</p>
         </div>
     </div>
     <!-- Page Header End -->
@@ -119,11 +119,10 @@
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3" type="submit"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                        Cart</button>
+                    <button class="btn btn-primary px-3" type="submit"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ</button>
                 </div>
                 <div class="d-flex pt-2">
-                    <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
+                    <p class="text-dark font-weight-medium mb-0 mr-2">Chia sẻ:</p>
                     <div class="d-inline-flex">
                         <a class="text-dark px-2" href="">
                             <i class="fab fa-facebook-f"></i>
@@ -149,7 +148,7 @@
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
-                        <h4 class="mb-3">Product Description</h4>
+                        <h4 class="mb-3">Mô tả chi tiết</h4>
                         {!! $product->description !!}
                     </div>
 

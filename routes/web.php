@@ -32,8 +32,9 @@ Route::get('product/{category_id}', [ClientProductController::class, 'index'])->
 Route::get('product-detail/{slug}', [ClientProductController::class, 'show'])->name('client.products.show');
 Route::get('product', [ClientProductController::class, 'listSearch'])->name('client.product.index');
 Route::get('product-search', [ClientProductController::class, 'autocompleteSearch'])->name('client.products.autocomplete');
+Route::get('/product/filter-by-category', [ProductController::class, 'filterByCategory'])->name('products.filterByCategory');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('add-to-cart', [CartController::class, 'store'])->name('client.carts.add');
     Route::get('carts', [CartController::class, 'index'])->name('client.carts.index');
     Route::post('update-quantity-product-in-cart/{cart_product_id}', [CartController::class, 'updateQuantityProduct'])->name('client.carts.update_product_quantity');
@@ -50,7 +51,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 
 //route admin

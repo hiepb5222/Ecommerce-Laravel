@@ -24,7 +24,16 @@ class CreateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:categories,name'
+            'name' => 'required|unique:categories,name',
         ];
     }
+    
+    public function messages()
+    {
+        return [
+            'name.required' => 'Tên danh mục không được để trống.',
+            'name.unique' => 'Tên danh mục đã tồn tại trong hệ thống.',
+        ];
+    }
+    
 }

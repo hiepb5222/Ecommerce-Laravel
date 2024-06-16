@@ -32,7 +32,8 @@ class Coupon extends Model
         ->whereDate('expiry_date', '>=', Carbon::now())->first();
     }
 
-    public function scopeSearch($query, $keyword){
+    public function scopeSearch($query, $keyword)
+    {
         return $query->where('name', 'like', '%'.$keyword.'%');
     }
 }

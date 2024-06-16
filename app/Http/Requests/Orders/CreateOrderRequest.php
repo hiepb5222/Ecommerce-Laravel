@@ -31,4 +31,23 @@ class CreateOrderRequest extends FormRequest
             'note'=>'required',
         ];
     }
+
+    public function messages()
+{
+    return [
+        'customer_name.required' => 'Vui lòng nhập tên khách hàng.',
+        'customer_name.string' => 'Tên khách hàng phải là chuỗi.',
+        'customer_name.max' => 'Tên khách hàng không được vượt quá 255 ký tự.',
+        
+        'customer_email.required' => 'Vui lòng nhập địa chỉ email của khách hàng.',
+        'customer_email.email' => 'Địa chỉ email không hợp lệ.',
+        'customer_email.max' => 'Địa chỉ email không được vượt quá 255 ký tự.',
+        
+        'customer_phone.required' => 'Vui lòng nhập số điện thoại của khách hàng.',
+        
+        'customer_address.required' => 'Vui lòng nhập địa chỉ của khách hàng.',
+        
+        'note.required' => 'Vui lòng nhập ghi chú.',
+    ];
+}
 }

@@ -27,7 +27,8 @@ class Order extends Model
         return $this->whereUserId($userId)->latest('id')->paginate(10);
     }
 
-    public function scopeSearch($query, $keyword){
+    public function scopeSearch($query, $keyword)
+    {
         return $query->where('customer_name', 'like', '%'.$keyword.'%');
     }
 }
