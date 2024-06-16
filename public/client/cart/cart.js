@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     getTotalValue();
 
     function getTotalValue() {
@@ -7,32 +7,33 @@ $(function() {
         $(".total-price-all").text(`$${total - couponPrice}`);
     }
 
-    $(document).on("click", ".btn-remove-product", function(e) {
+    $(document).on("click", ".btn-remove-product", function (e) {
         let url = $(this).data("action");
         confirmDelete()
-            .then(function() {
-                $.post(url, data, (res) => { // Gửi CSRF token trong dữ liệu yêu cầu
+            .then(function () {
+                $.post(url, (res) => {
+                    // Gửi CSRF token trong dữ liệu yêu cầu
                     let cart = res.cart;
                     let cartProductId = res.product_cart_id;
-                    $("#productCountCart").text(cart.product_count).data("price", cart.total_price);;
+                    $("#productCountCart")
+                        .text(cart.product_count)
+                        .data("price", cart.product_count);
                     $(".total-price")
                         .text(`$${cart.total_price}`)
-                        .data("price", cart.product_count);
+                        .data("price", cart.total_price);
                     $(`#row-${cartProductId}`).remove();
                     getTotalValue();
                 });
             })
-            .catch(function() {});
+            .catch(function () {});
     });
-
 
     const TIME_TO_UPDATE = 1000;
 
     $(document).on(
         "click",
         ".btn-update-quantity",
-        _.debounce(function(e) {
-
+        _.debounce(function (e) {
             let url = $(this).data("action");
             let id = $(this).data("id");
             let data = {
@@ -54,8 +55,9 @@ $(function() {
                 // getTotalValue();
                 // cartProductPrice;
 
-                $(".total-price").text(`$${cart.total_price}`).data("price", cart
-                    .total_price); // Sửa lại giá trị data-price
+                $(".total-price")
+                    .text(`$${cart.total_price}`)
+                    .data("price", cart.total_price); // Sửa lại giá trị data-price
                 getTotalValue();
                 Swal.fire({
                     position: "top-end",

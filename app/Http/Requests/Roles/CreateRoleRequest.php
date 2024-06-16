@@ -29,4 +29,21 @@ class CreateRoleRequest extends FormRequest
             'group' =>'required',
         ];
     }
+
+    public function messages()
+{
+    return [
+        'name.required' => 'Tên không được để trống.',
+        'name.string' => 'Tên phải là chuỗi.',
+        'name.max' => 'Tên không được vượt quá 255 ký tự.',
+        
+        'display_name.required' => 'Tên hiển thị không được để trống.',
+        'display_name.string' => 'Tên hiển thị phải là chuỗi.',
+        'display_name.max' => 'Tên hiển thị không được vượt quá 255 ký tự.',
+        
+        'group.required' => 'Nhóm không được để trống.',
+        'group.string' => 'Nhóm phải là chuỗi.',
+        'group.max' => 'Nhóm không được vượt quá 255 ký tự.',
+    ];
+}
 }

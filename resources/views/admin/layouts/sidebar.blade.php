@@ -7,7 +7,7 @@
         <a class="navbar-brand m-0" href=""
             target="_blank">
             <img src="{{ auth()->user()->image_path }}" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold text-white">Hello {{auth()->user()->name}}</span>
+            <span class="ms-1 font-weight-bold text-white">Xin chào, {{auth()->user()->name}}</span>
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">

@@ -97,7 +97,6 @@ class RoleController extends Controller
         if (!empty($permissionIds)) {
             $role->permissions()->sync($permissionIds);
         } else {
-           
             $role->permissions()->sync([]);
         }
 

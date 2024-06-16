@@ -31,7 +31,7 @@ class DashboardController extends Controller
     }
 
     public function index()
-    {  
+    {
         $userCount = $this->user->count();
         $categoryCount = $this->category->count();
         $orderCount = $this->order->count();

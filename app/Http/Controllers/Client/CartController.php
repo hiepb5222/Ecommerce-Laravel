@@ -11,6 +11,8 @@ use App\Models\CartProduct;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
+use App\Notifications\CheckoutConfirmation;
+use Illuminate\Support\Facades\Notification;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session as Session;
@@ -191,7 +193,8 @@ class CartController extends Controller
         $dataCreate = $request->all();
         $dataCreate['user_id'] = auth()->user()->id;
         $dataCreate['status'] = 'pending';
-        $this->order->create($dataCreate);
+        $order = $this->order->create($dataCreate);
+
         $couponID = Session::get('coupon_id');
         if ($couponID) {
             $coupon =  $this->coupon->find(Session::get('coupon_id'));
@@ -202,7 +205,12 @@ class CartController extends Controller
         $cart = $this->cart->firstOrCreateBy(auth()->user()->id);
         $cart->products()->delete();
         Session::forget(['coupon_id', 'discount_amount_price', 'coupon_code']);
-        return redirect()->route('client.orders.index');
 
+        $emailReceiver = $request->input('customer_email'); // Địa chỉ email người nhận từ form checkout
+
+        Notification::route('mail', $emailReceiver)
+                ->notify(new CheckoutConfirmation($order));
+
+        return redirect()->route('client.orders.index');
     }
 }

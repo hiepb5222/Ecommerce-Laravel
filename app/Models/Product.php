@@ -54,7 +54,7 @@ class Product extends Model
         return $this->attributes['sale'] ? $this->attributes['price'] - ($this->attributes['sale'] * 0.01 * $this->attributes['price']) :0;
     }
 
-     public function setNameAttribute($value)
+    public function setNameAttribute($value)
     {
         $this->attributes['name'] = $value;
         // Tạo slug từ trường name và lưu vào trường slug
@@ -72,7 +72,10 @@ class Product extends Model
         return $slug;
     }
 
-    public function scopeSearch($query, $keyword){
+    public function scopeSearch($query, $keyword)
+    {
         return $query->where('name', 'like', '%'.$keyword.'%');
     }
+
+    
 }

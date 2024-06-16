@@ -28,4 +28,12 @@ class UpdateCategoryRequest extends FormRequest
 
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Tên danh mục không được để trống.',
+            'name.unique' => 'Tên danh mục đã tồn tại trong hệ thống.',
+        ];
+    }
 }

@@ -55,6 +55,26 @@ class RegisterController extends Controller
             'phone' => ['required','unique:users,phone'],
             'gender' => ['required'],
 
+        ], [
+            'name.required' => 'Họ tên không được để trống.',
+            'name.string' => 'Họ tên phải là chuỗi.',
+            'name.max' => 'Họ tên không được vượt quá 255 ký tự.',
+            
+            'email.required' => 'Email không được để trống.',
+            'email.string' => 'Email phải là chuỗi.',
+            'email.email' => 'Email không hợp lệ.',
+            'email.max' => 'Email không được vượt quá 255 ký tự.',
+            'email.unique' => 'Email đã được sử dụng.',
+            
+            'password.required' => 'Mật khẩu không được để trống.',
+            'password.string' => 'Mật khẩu phải là chuỗi.',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
+            'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
+            
+            'phone.required' => 'Số điện thoại không được để trống.',
+            'phone.unique' => 'Số điện thoại đã được sử dụng.',
+            
+            'gender.required' => 'Giới tính không được để trống.',
         ]);
     }
 
@@ -72,6 +92,7 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'gender' => $data['gender'],
             'password' => Hash::make($data['password']),
-        ]);
+            ''
+        ])->assignRole('user');
     }
 }
