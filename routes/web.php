@@ -14,7 +14,9 @@ use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+if(App::environment('production')){
+    URL::forceScheme('https');
+}
 /*
 |--------------------------------------------------------------------------
 | Web Routes
