@@ -1,18 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\CouponController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\OrderController as AdminOrderController;
-use App\Http\Controllers\Client\HomeController;
-use App\Http\Controllers\Client\CartController;
-use App\Http\Controllers\Client\OrderController;
-use App\Http\Controllers\Client\ProductController as ClientProductController;
-use App\Models\Category;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
